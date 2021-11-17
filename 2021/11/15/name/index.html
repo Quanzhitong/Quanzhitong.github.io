@@ -115,7 +115,12 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-技术周刊">
 
-    <a href="/home/" rel="section"><i class="fab fa-weebly fa-fw"></i>技术周刊</a>
+    <a href="/" rel="section"><i class="fab fa-weebly fa-fw"></i>技术周刊</a>
+
+  </li>
+        <li class="menu-item menu-item-有趣知识">
+
+    <a href="/interesting/" rel="section"><i class="fas fa-ice-cream fa-fw"></i>有趣知识</a>
 
   </li>
         <li class="menu-item menu-item-时光机">
@@ -276,6 +281,7 @@
     </div>
       </footer>
     
+	
   </article>
   
   
@@ -363,6 +369,7 @@
 
 
 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1349292048&auto=1&height=66"></iframe>
       </div>
 
     </div>
@@ -388,8 +395,24 @@
   </span>
   <span class="author" itemprop="copyrightHolder">修远</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Gemini</span> 强力驱动
-  </div>
+
+<span id="timeDate" >载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("10/21/2021 12:34:56");//在此处修改你的建站时间，格式：月/日/年 时:分:秒
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "本站已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
 
         
 <div class="busuanzi-count">
