@@ -74,9 +74,31 @@
   </style>
 </noscript>
 
+  <style>
+	  @font-face {
+		font-family: 'Against SVG';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Against SVG'), url('fonts/AgainstSVG.woff') format('woff');
+    }
+  </style>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+
+<body itemscope >
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" integrity="sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio="
+    crossorigin="anonymous"></script>
+  	 <script type="text/javascript" src="js/digitalRain.js"></script>
+   
+<div class="cover-wrapper">
+	<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
+	<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
+	<div class="nav">
+		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/">HOME</a></div>
+		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/tag">TAG</a></div>
+		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
+	</div>
+</div> 
   <div class="container use-motion">
     <div class="headband"></div>
 
@@ -176,6 +198,70 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/19/index/" class="post-title-link" itemprop="url">swig速查</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-19 13:57:15 / 修改时间：15:53:52" itemprop="dateCreated datePublished" datetime="2021-11-19T13:57:15+08:00">2021-11-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="模板继承"><a href="#模板继承" class="headerlink" title="模板继承"></a>模板继承</h3><p>Swig使用extends &amp; block 来实现模板继承。</p>
+<h3 id="空白符控制"><a href="#空白符控制" class="headerlink" title="空白符控制"></a>空白符控制</h3><p>模板中的任何空白符都会留在最终输出的模板中。但是，可以在逻辑标签周围使用空白符控制来控制空白符的显示。</p>
+<p>如果需要移除掉空白符，只要在标签的开始或结束为止添加一个短横线(-)即可分别移除前后的空白符。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注释标记会被解析器忽略。在模板被渲染之前注释标签会被移除，如此一来，除非有源代码权限，否则其他人无法看到这些注释。注释使用 括号-# 的语法：</p>
+<h3 id="逻辑标签"><a href="#逻辑标签" class="headerlink" title="逻辑标签"></a>逻辑标签</h3><p>Swig包括一些被称为 标签（Tags）的逻辑操作块，比起变量输出，使用逻辑标签能够控制大范围的输出。在书写标签时使用 括号-百分号 的语法：。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
       
   
   
@@ -591,6 +677,13 @@
 
               <time title="创建时间：2021-10-19 13:58:04" itemprop="dateCreated datePublished" datetime="2021-10-19T13:58:04+08:00">2021-10-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-21 15:21:22" itemprop="dateModified" datetime="2021-11-21T15:21:22+08:00">2021-11-21</time>
+              </span>
 
           
 
@@ -616,6 +709,7 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js&quot; integrity=&quot;sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio=&quot;</span><br><span class="line">   crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</span><br><span class="line"> 	 &lt;script type=&quot;text/javascript&quot; src=&quot;js/digitalRain.js&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">   	&lt;canvas id=&quot;canvas&quot; width=&quot;1920&quot; height=&quot;1080&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;js/colorTextRain.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -699,7 +793,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -717,7 +811,7 @@
 
 
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1349292048&auto=1&height=66"></iframe>
+
       </div>
 
     </div>
@@ -837,8 +931,9 @@ setInterval("createtime()",250);
 
   <script async src="/js/clickFire.js"></script>
 
-
+  
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script type="text/javascript" src="/js/snowClose.js"></script>
+
 </body>
 </html>

@@ -76,9 +76,31 @@
   </style>
 </noscript>
 
+  <style>
+	  @font-face {
+		font-family: 'Against SVG';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Against SVG'), url('fonts/AgainstSVG.woff') format('woff');
+    }
+  </style>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+
+<body itemscope >
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" integrity="sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio="
+    crossorigin="anonymous"></script>
+  	 <script type="text/javascript" src="js/digitalRain.js"></script>
+   
+<div class="cover-wrapper">
+	<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
+	<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
+	<div class="nav">
+		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/">HOME</a></div>
+		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/tag">TAG</a></div>
+		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
+	</div>
+</div> 
   <div class="container use-motion">
     <div class="headband"></div>
 
@@ -277,7 +299,10 @@
     <a href="/2021/10/21/markdown/" rel="prev" title="Markdown 语法">
       <i class="fa fa-chevron-left"></i> Markdown 语法
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/19/index/" rel="next" title="swig速查">
+      swig速查 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -351,7 +376,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -369,7 +394,7 @@
 
 
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1349292048&auto=1&height=66"></iframe>
+
       </div>
 
     </div>
@@ -489,8 +514,9 @@ setInterval("createtime()",250);
 
   <script async src="/js/clickFire.js"></script>
 
-
+  
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script type="text/javascript" src="/js/snowClose.js"></script>
+
 </body>
 </html>

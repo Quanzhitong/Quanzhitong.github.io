@@ -1236,7 +1236,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffffa8;
+  background: #2a3dff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2463,8 +2463,8 @@ ul.breadcrumb li + li:last-child {
   opacity: 0;
 }
 .sidebar-inner.affix {
-  position: fixed;
-  top: 12px;
+  position: relative;
+  top: -6px;
 }
 .sidebar-inner.affix-bottom {
   position: absolute;
@@ -2664,9 +2664,55 @@ ul.breadcrumb li + li:last-child {
     margin: 8px 0 0;
   }
 }
-body {
-  background: url("/images/tree.jpeg") no-repeat fixed center;
-  background-size: 100% 100%;
+#canvas {
+  margin: 0;
+  padding: 0;
+}
+.cover-wrapper {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(78,239,255,0.62);
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
+  animation: fadeIn 2s ease 1s forwards;
+}
+.cover-wrapper .logo {
+  clip-path: circle(70px at 170px 155px);
+  position: relative;
+  bottom: 75px;
+  right: -39px;
+}
+.cover-wrapper .logo img {
+  max-width: 65%;
+  position: absolute;
+}
+.cover-wrapper .title {
+  font-size: 30px !important;
+  text-align: center;
+  position: relative;
+  top: 135px;
+  color: #fbfbf8;
+}
+.cover-wrapper .nav {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 132px;
+  display: flex;
+  align-items: center;
+}
+.cover-wrapper .nav div {
+  padding: 0 10px;
+}
+.cover-wrapper .nav div a {
+  text-decoration: none;
+  color: #fde968;
+  border-bottom: none;
 }
 .sidebar {
   border-radius: 10px;

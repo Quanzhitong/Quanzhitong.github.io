@@ -19,20 +19,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="心有猛虎，细嗅蔷薇">
-<meta property="og:type" content="website">
-<meta property="og:title" content="历史">
-<meta property="og:url" content="http://example.com/readBook/biography/history.html">
+  <meta name="description" content="模板继承Swig使用extends &amp; block 来实现模板继承。 空白符控制模板中的任何空白符都会留在最终输出的模板中。但是，可以在逻辑标签周围使用空白符控制来控制空白符的显示。 如果需要移除掉空白符，只要在标签的开始或结束为止添加一个短横线(-)即可分别移除前后的空白符。 注释注释标记会被解析器忽略。在模板被渲染之前注释标签会被移除，如此一来，除非有源代码权限，否则其他人无法看到这些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swig速查">
+<meta property="og:url" content="http://example.com/2021/11/19/index/index.html">
 <meta property="og:site_name" content="修远的个人博客">
-<meta property="og:description" content="心有猛虎，细嗅蔷薇">
+<meta property="og:description" content="模板继承Swig使用extends &amp; block 来实现模板继承。 空白符控制模板中的任何空白符都会留在最终输出的模板中。但是，可以在逻辑标签周围使用空白符控制来控制空白符的显示。 如果需要移除掉空白符，只要在标签的开始或结束为止添加一个短横线(-)即可分别移除前后的空白符。 注释注释标记会被解析器忽略。在模板被渲染之前注释标签会被移除，如此一来，除非有源代码权限，否则其他人无法看到这些">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-30T12:22:37.000Z">
-<meta property="article:modified_time" content="2021-10-30T14:04:54.551Z">
+<meta property="article:published_time" content="2021-11-19T05:57:15.000Z">
+<meta property="article:modified_time" content="2021-11-19T07:53:52.984Z">
 <meta property="article:author" content="修远">
 <meta property="article:tag" content="xiuyuan、修远、qzt、quanzhitong，全志同">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/readBook/biography/history">
+<link rel="canonical" href="http://example.com/2021/11/19/index/">
 
 
 <script id="page-configurations">
@@ -40,13 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>历史 | 修远的个人博客
-</title>
+  <title>swig速查 | 修远的个人博客</title>
   
 
 
@@ -198,94 +197,107 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
+            
+
+    
   
-
-      
-
-        
-        <ul id="sub-menu" class="sub-menu menu">
-          
-            
-          
-          
-              
-  <li class="menu-item menu-item-人物传记">
-
-    <a href="/readBook/biography/" rel="section"><i class="fad fa-book-user fa-fw"></i>人物传记</a>
-
-  </li>
-
-
-          
-          
-            
-                
-  <li class="menu-item menu-item-历史">
-
-    <a href="/readBook/history/" rel="section"><i class="fa fa-archive fa-fw"></i>历史</a>
-
-  </li>
-
-
-        </ul>
-        
-
-        
-
-                
-                
-        
-      
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/index/">
 
-          <div class="content page posts-expand">
-            
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
 
-    
-    
-    
-    <div class="post-block" lang="zh-CN">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          swig速查
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">历史
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-<div class="post-meta">
-  
-  <ul class="breadcrumb">
+              <time title="创建时间：2021-11-19 13:57:15 / 修改时间：15:53:52" itemprop="dateCreated datePublished" datetime="2021-11-19T13:57:15+08:00">2021-11-19</time>
+            </span>
+
           
-            <li><a href="/readBook/">READBOOK</a></li>
-            <li><a href="/readBook/biography/">BIOGRAPHY</a></li>
-            <li>HISTORY</li>
-          
-  </ul>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="模板继承"><a href="#模板继承" class="headerlink" title="模板继承"></a>模板继承</h3><p>Swig使用extends &amp; block 来实现模板继承。</p>
+<h3 id="空白符控制"><a href="#空白符控制" class="headerlink" title="空白符控制"></a>空白符控制</h3><p>模板中的任何空白符都会留在最终输出的模板中。但是，可以在逻辑标签周围使用空白符控制来控制空白符的显示。</p>
+<p>如果需要移除掉空白符，只要在标签的开始或结束为止添加一个短横线(-)即可分别移除前后的空白符。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注释标记会被解析器忽略。在模板被渲染之前注释标签会被移除，如此一来，除非有源代码权限，否则其他人无法看到这些注释。注释使用 括号-# 的语法：</p>
+<h3 id="逻辑标签"><a href="#逻辑标签" class="headerlink" title="逻辑标签"></a>逻辑标签</h3><p>Swig包括一些被称为 标签（Tags）的逻辑操作块，比起变量输出，使用逻辑标签能够控制大范围的输出。在书写标签时使用 括号-百分号 的语法：。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>码字不易，赏块大洋</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weixin.jpg" alt="修远 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
 </div>
 
-</header>
 
-      
-      
-      
-      <div class="post-body">
-          
-      </div>
-      
-      
-      
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/15/name/" rel="prev" title="前端名词扫盲大全">
+      <i class="fa fa-chevron-left"></i> 前端名词扫盲大全
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
+      </footer>
     
-  <ul class="breadcrumb">
-          
-            <li><a href="/readBook/">READBOOK</a></li>
-            <li><a href="/readBook/biography/">BIOGRAPHY</a></li>
-            <li>HISTORY</li>
-          
-  </ul>
+	
+  </article>
+  
+  
+  
 
-    
-    
-    
 
 
           </div>
@@ -336,6 +348,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%BB%A7%E6%89%BF"><span class="nav-text">模板继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E7%99%BD%E7%AC%A6%E6%8E%A7%E5%88%B6"><span class="nav-text">空白符控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-text">注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%A0%87%E7%AD%BE"><span class="nav-text">逻辑标签</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
