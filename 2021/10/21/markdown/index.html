@@ -90,24 +90,38 @@
 
 
 <body itemscope >
+   
+
+	<div class="cover-wrapper" id="cover-wrapper">
+		<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
+		<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
+		<div class="nav">
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="#home" onclick="scorll(event)">HOME</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/interesting">INTERESTING</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function scorll (event) {
+			var dom = document.getElementById('menu');
+  			dom.scrollIntoView({behavior: 'smooth', block: 'start'});
+		}
+		var dom = document.getElementById('cover-wrapper');
+		var canvasDom = document.getElementById('defaultCanvas0');
+		if(!(window.location.pathname === '/') || !canvasDom) {
+			dom.style.display = 'none'
+		}
+	</script>
+ 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" integrity="sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio="
     crossorigin="anonymous"></script>
   	 <script type="text/javascript" src="js/digitalRain.js"></script>
-   
-<div class="cover-wrapper">
-	<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
-	<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
-	<div class="nav">
-		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/">HOME</a></div>
-		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/tag">TAG</a></div>
-		<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
-	</div>
-</div> 
   <div class="container use-motion">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+      <div class="header-inner"><div class="site-brand-container" id='Home'>
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
@@ -137,9 +151,9 @@
 
 <nav class="site-nav">
   <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-技术周刊">
+        <li class="menu-item menu-item-首页">
 
-    <a href="/" rel="section"><i class="fab fa-weebly fa-fw"></i>技术周刊</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-有趣知识">
