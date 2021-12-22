@@ -27,7 +27,7 @@
 <meta property="og:description" content="浏览器原生的 Intl.Segementer API 可以进行文本分词，支持中文。传送门1234567891011let segmenter &#x3D; new Intl.Segmenter(&quot;zh-CN&quot;, &amp;#123;granularity: &quot;word&quot;&amp;#125;);let input &#x3D; &quot;Intl.Segementer API 是浏览器原生的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-17T09:34:47.000Z">
-<meta property="article:modified_time" content="2021-11-17T09:47:17.217Z">
+<meta property="article:modified_time" content="2021-12-22T12:44:23.933Z">
 <meta property="article:author" content="修远">
 <meta property="article:tag" content="xiuyuan、修远、qzt、quanzhitong，全志同">
 <meta name="twitter:card" content="summary">
@@ -179,6 +179,11 @@
     <a href="/life/" rel="section"><i class="fas fa-pizza-slice fa-fw"></i>生活</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -237,6 +242,11 @@
       <div class="post-body">
           <ul>
 <li>浏览器原生的 Intl.Segementer API 可以进行文本分词，支持中文。<br><span class="exturl" data-url="aHR0cHM6Ly9qc2Jpbi5jb20vbHVidWplam9rZS9lZGl0P2pzLGNvbnNvbGU=">传送门<i class="fa fa-external-link-alt"></i></span><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let segmenter = new Intl.Segmenter(&quot;zh-CN&quot;, &#123;granularity: &quot;word&quot;&#125;);</span><br><span class="line">let input = &quot;Intl.Segementer API 是浏览器原生的分词 API。&quot;;</span><br><span class="line">let segments = segmenter.segment(input);</span><br><span class="line"></span><br><span class="line">for (let &#123;segment, index, isWordLike&#125; of segments) &#123;</span><br><span class="line">	console.log(&quot;字符串位置 [%d, %d): %s%s&quot;,</span><br><span class="line">		index, index + segment.length,</span><br><span class="line">		segment,</span><br><span class="line">		isWordLike ? &quot; [单词]&quot; : &quot;&quot;</span><br><span class="line">	);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>es6的解构赋值在严格模式下是通过 ‘===’ 来判断值是否等于 undefined的<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">比如：</span><br><span class="line">const foo = &#123;</span><br><span class="line"> name: &#x27;xiuyuan&#x27;,</span><br><span class="line"> age: null</span><br><span class="line">&#125;</span><br><span class="line">const &#123; name = &#x27;华仔&#x27;, age = &#x27;18&#x27;, sex = &#x27;男&#x27; &#125; = foo;</span><br><span class="line">console.log(age) // null</span><br><span class="line">console.log(sex) // &#x27;男&#x27;</span><br></pre></td></tr></table></figure></li>
+<li>整个网页内容可编辑，<blockquote>
+<p>document.body.contentEditable=true</p>
+</blockquote>
+</li>
 </ul>
 
       </div>
