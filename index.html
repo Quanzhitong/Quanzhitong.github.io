@@ -146,6 +146,11 @@
 
 <nav class="site-nav">
   <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-时光机">
 
     <a href="/archives/" rel="section"><i class="fas fa-history fa-fw"></i>时光机</a>
@@ -211,6 +216,69 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/27/sentry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/27/sentry/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-27 21:43:05 / 修改时间：22:01:08" itemprop="dateCreated datePublished" datetime="2021-12-27T21:43:05+08:00">2021-12-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="安装-依赖"><a href="#安装-依赖" class="headerlink" title="安装 依赖"></a>安装 依赖</h3><p>  yarn add @sentry/react @sentry/tracing</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置应该在应用程序的生命周期中尽早进行。umi中 可在app.tsx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">	dsn: &quot;https://060dc6d9970442a2afa66a122e26a46c@o1092033.ingest.sentry.io/6109927&quot;,</span><br><span class="line">	integrations: [new Integrations.BrowserTracing()],</span><br><span class="line">	// 0 到 1 之间的数字，控制给定事务发送到 Sentry 的概率百分比。(0 表示 0%，1 表示 100%)同样适用于应用程序中创建的所有事务。必须定义这个或 tracesSampler 以启用跟踪。</span><br><span class="line">	tracesSampleRate: 1.0,</span><br><span class="line">	release: &#x27;test@1.0.2&#x27;,</span><br><span class="line">	beforeSend(event, hint) &#123;</span><br><span class="line">		// Check if it is an exception, and if so, show the report dialog</span><br><span class="line">		  if (event.exception) &#123;</span><br><span class="line">			  console.log(event.event_id ,&#x27;====log==&#x27;)</span><br><span class="line">			Sentry.showReportDialog(&#123; eventId: event.event_id &#125;);</span><br><span class="line">		  &#125;</span><br><span class="line">		  return event;</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="可以设置-React-Error-Boundary"><a href="#可以设置-React-Error-Boundary" class="headerlink" title="可以设置 React Error Boundary"></a>可以设置 React Error Boundary</h3><p>自定义报错UI， 可以自动发送错误到sentry ，但是这和sentry自动收集的有什么区别呢</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
       
   
   
@@ -873,7 +941,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
