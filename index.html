@@ -181,11 +181,6 @@
     <a href="/life/" rel="section"><i class="fas fa-pizza-slice fa-fw"></i>生活</a>
 
   </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -216,69 +211,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/27/sentry/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
-      <meta itemprop="name" content="修远">
-      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="修远的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/27/sentry/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-27 21:43:05 / 修改时间：22:01:08" itemprop="dateCreated datePublished" datetime="2021-12-27T21:43:05+08:00">2021-12-27</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="安装-依赖"><a href="#安装-依赖" class="headerlink" title="安装 依赖"></a>安装 依赖</h3><p>  yarn add @sentry/react @sentry/tracing</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置应该在应用程序的生命周期中尽早进行。umi中 可在app.tsx</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">	dsn: &quot;https://060dc6d9970442a2afa66a122e26a46c@o1092033.ingest.sentry.io/6109927&quot;,</span><br><span class="line">	integrations: [new Integrations.BrowserTracing()],</span><br><span class="line">	// 0 到 1 之间的数字，控制给定事务发送到 Sentry 的概率百分比。(0 表示 0%，1 表示 100%)同样适用于应用程序中创建的所有事务。必须定义这个或 tracesSampler 以启用跟踪。</span><br><span class="line">	tracesSampleRate: 1.0,</span><br><span class="line">	release: &#x27;test@1.0.2&#x27;,</span><br><span class="line">	beforeSend(event, hint) &#123;</span><br><span class="line">		// Check if it is an exception, and if so, show the report dialog</span><br><span class="line">		  if (event.exception) &#123;</span><br><span class="line">			  console.log(event.event_id ,&#x27;====log==&#x27;)</span><br><span class="line">			Sentry.showReportDialog(&#123; eventId: event.event_id &#125;);</span><br><span class="line">		  &#125;</span><br><span class="line">		  return event;</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="可以设置-React-Error-Boundary"><a href="#可以设置-React-Error-Boundary" class="headerlink" title="可以设置 React Error Boundary"></a>可以设置 React Error Boundary</h3><p>自定义报错UI， 可以自动发送错误到sentry ，但是这和sentry自动收集的有什么区别呢</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-	
-  </article>
-  
-  
-  
-
       
   
   
@@ -314,8 +246,21 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-22 21:00:05" itemprop="dateModified" datetime="2021-12-22T21:00:05+08:00">2021-12-22</time>
+                <time title="修改时间：2022-01-02 15:45:07" itemprop="dateModified" datetime="2022-01-02T15:45:07+08:00">2022-01-02</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/hooks/" itemprop="url" rel="index"><span itemprop="name">hooks</span></a>
+                </span>
+            </span>
 
           
 
@@ -373,9 +318,28 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-19 13:57:15 / 修改时间：15:53:52" itemprop="dateCreated datePublished" datetime="2021-11-19T13:57:15+08:00">2021-11-19</time>
+              <time title="创建时间：2021-11-19 13:57:15" itemprop="dateCreated datePublished" datetime="2021-11-19T13:57:15+08:00">2021-11-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-02 15:29:29" itemprop="dateModified" datetime="2022-01-02T15:29:29+08:00">2022-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">语法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E6%B3%95/swig/" itemprop="url" rel="index"><span itemprop="name">swig</span></a>
+                </span>
             </span>
 
           
@@ -437,9 +401,28 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-15 21:46:18 / 修改时间：16:00:52" itemprop="dateCreated datePublished" datetime="2021-11-15T21:46:18+08:00">2021-11-15</time>
+              <time title="创建时间：2021-11-15 21:46:18" itemprop="dateCreated datePublished" datetime="2021-11-15T21:46:18+08:00">2021-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-02 15:30:11" itemprop="dateModified" datetime="2022-01-02T15:30:11+08:00">2022-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/%E5%89%8D%E7%AB%AF%E5%90%8D%E8%AF%8D/" itemprop="url" rel="index"><span itemprop="name">前端名词</span></a>
+                </span>
             </span>
 
           
@@ -466,6 +449,304 @@
 <li>前端三剑客，从 Dreamweaver、Fireworks、Flash 到 HTML、CSS、JS 到 View Framework、Node.js CLI、Node.js Framework，再到 Meta Framework、Frontend Paas、Low Code，目前是第四代</li>
 <li>低码化，包含两个方向，一是和研发工具结合，实现项目配置的 GUI 可视化操作，二是低码搭建</li>
 </ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/heath/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/31/heath/" class="post-title-link" itemprop="url">科学健身</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-31 18:58:47" itemprop="dateCreated datePublished" datetime="2021-10-31T18:58:47+08:00">2021-10-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-02 15:27:53" itemprop="dateModified" datetime="2022-01-02T15:27:53+08:00">2022-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%81%A5%E5%BA%B7/" itemprop="url" rel="index"><span itemprop="name">健康</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="科学健身"><a href="#科学健身" class="headerlink" title="科学健身"></a>科学健身</h2><h3 id="1、知识扫盲"><a href="#1、知识扫盲" class="headerlink" title="1、知识扫盲"></a>1、知识扫盲</h3><h4 id="1-1-什么是卡路里和大卡"><a href="#1-1-什么是卡路里和大卡" class="headerlink" title="1.1 什么是卡路里和大卡?"></a>1.1 什么是卡路里和大卡?</h4><blockquote>
+<p>卡路里是热量单位，就是将一克水的温度升高摄氏一度（°C）所需要的热量。1卡路里等于4.1868焦耳。卡路里又被称为小卡。将一千克水加热１°C的热量为一千卡路里，又称为千卡或大卡。<br>    卡路里和我们的日常生活息息相关。一个人，即使什么也不做，每天也要消耗一定数量的卡路里，我们称之为基础代谢。美国女性的平均BMR为1,493卡路里，美国男性的平均BMR为1,662卡路里。食物中的卡路里以热量的形式提供能量，使我们的身体能够发挥作用。我们的身体储存并“燃烧”卡路里作为燃料。</p>
+</blockquote>
+<h4 id="1-2-什么是BMR"><a href="#1-2-什么是BMR" class="headerlink" title="1.2 什么是BMR?"></a>1.2 什么是BMR?</h4><blockquote>
+<p>BMR - 基础代谢率。 BMR是人体保持身体静止功能所需的能量（通常以卡路里表示）。 在这种状态下，能量仅用于重要器官（如心脏，肺）的运行，以保持身体功能，（如呼吸，血液循环，控制体温）。 基础代谢率通常占您每天燃烧的卡路里的约60-75％。  </p>
+</blockquote>
+<h4 id="1-3-单位换算"><a href="#1-3-单位换算" class="headerlink" title="1.3 单位换算"></a>1.3 单位换算</h4><blockquote>
+<p>1磅 = 453.59237 克<br>1磅脂肪= 3500卡路里，每天减少摄入250卡路里，你会在两周内减少一磅体重）。<br>1英尺 = 30.48 厘米</p>
+</blockquote>
+<h4 id="1-4-日常食物所含热量"><a href="#1-4-日常食物所含热量" class="headerlink" title="1.4 日常食物所含热量"></a>1.4 日常食物所含热量</h4><blockquote>
+<ul>
+<li>我是下载了一个<code>薄荷健康</code>App，可以查到日常所吃食物的营养热量含量  </li>
+</ul>
+</blockquote>
+<p>列举几种常吃的：</p>
+<table>
+<thead>
+<tr>
+<th>食物</th>
+<th>蛋白（克）</th>
+<th>碳水（克）</th>
+<th>脂肪（克）</th>
+<th>热量（千焦）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>鸡蛋(中)</td>
+<td>6.9</td>
+<td>1.3</td>
+<td>4.5</td>
+<td>349</td>
+</tr>
+<tr>
+<td>米饭(碗)</td>
+<td>4.7</td>
+<td>46.6</td>
+<td>0.5</td>
+<td>874</td>
+</tr>
+<tr>
+<td>香蕉(小)</td>
+<td>0.9</td>
+<td>14.3</td>
+<td>0.1</td>
+<td>428</td>
+</tr>
+<tr>
+<td>瘦猪肉(100克)</td>
+<td>20.3</td>
+<td>1.5</td>
+<td>6.2</td>
+<td>598</td>
+</tr>
+<tr>
+<td>牛肉(肥瘦100克)</td>
+<td>19.9</td>
+<td>2.0</td>
+<td>4.2</td>
+<td>523</td>
+</tr>
+<tr>
+<td>肉包(个)</td>
+<td>13.4</td>
+<td>27.1</td>
+<td>5.1</td>
+<td>858</td>
+</tr>
+</tbody></table>
+<h3 id="2、制定符合自己的健身计划"><a href="#2、制定符合自己的健身计划" class="headerlink" title="2、制定符合自己的健身计划"></a>2、制定符合自己的健身计划</h3><h4 id="2-1-首先要确定目标，是增肌还是减脂？"><a href="#2-1-首先要确定目标，是增肌还是减脂？" class="headerlink" title="2.1 首先要确定目标，是增肌还是减脂？"></a>2.1 首先要确定目标，是增肌还是减脂？</h4><blockquote>
+<p>可以在这里<span class="exturl" data-url="aHR0cHM6Ly9jbi5vbmxpbmVibWljYWxjdWxhdG9yLmNvbS8=">查看BMI<i class="fa fa-external-link-alt"></i></span>指数，目标得清晰  </p>
+</blockquote>
+<h4 id="2-2-1-增肌"><a href="#2-2-1-增肌" class="headerlink" title="2.2.1 增肌"></a>2.2.1 增肌</h4><blockquote>
+<ul>
+<li>计算大概需要摄入的营养 （数据来自业界）</li>
+</ul>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">男性：以65kg为例：  </span><br><span class="line">  蛋白质：65 * 1.8 = 117g  </span><br><span class="line">  碳水： 65 * 6 = 390g</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>根据情况计算怎么该吃，吃什么  （数据是按薄荷健康）</li>
+</ul>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">早餐：两个肉包子加一个鸡蛋   </span><br><span class="line">  蛋白 = 13.4 * 2 + 6.9 = 33.7g  </span><br><span class="line">  碳水 = 27.1 * 2 + 1.3 = 55.5g</span><br><span class="line">午餐：土豆牛肉盖浇饭100克（大概一碗）</span><br><span class="line">  蛋白：5.87g</span><br><span class="line">  碳水：16.17克</span><br><span class="line">晚餐：融爱星面馆一碗面</span><br><span class="line">  这个没有数据，参考其他面食，姑且按蛋白5g，碳水20g</span><br><span class="line">晚上可能吃个香蕉 蛋白1g，碳水15g</span><br><span class="line"></span><br><span class="line">总：蛋白：33.7 + 5.87 + 5 + 1 = 45.57g</span><br><span class="line">   碳水：55.5 + 16.17 + 20 + 15 = 106.57g。</span><br></pre></td></tr></table></figure>
+<p>额。。这个，粗略的计算之后，终于知道自己为啥体重N多年长不上去了，自己平时感觉吃的差不多饱了，其实也就吃了应当吃的目标的三分之一而已，所以，吃还是不能靠感觉的，数据虽不精准，但是客观。</p>
+<h4 id="减脂（减少热量）"><a href="#减脂（减少热量）" class="headerlink" title="减脂（减少热量）"></a>减脂（减少热量）</h4><blockquote>
+<ul>
+<li><p>先估算自己每天消耗的能量   <span class="exturl" data-url="aHR0cDovL3d3dy5ocGNuMjEuY29tL3Rvb2xzL3l1bmRvbmdrYWxpbHVqaXN1YW50ZXN0Lmh0bWw=">粗略算一下<i class="fa fa-external-link-alt"></i></span>，</p>
+</li>
+<li><p>根据情况计算怎么该吃，吃什么，以减少200-300大卡为宜</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="3、执行并根据最新身体情况调整计划"><a href="#3、执行并根据最新身体情况调整计划" class="headerlink" title="3、执行并根据最新身体情况调整计划"></a>3、执行并根据最新身体情况调整计划</h3><h4 id="3-1-练"><a href="#3-1-练" class="headerlink" title="3.1 练"></a>3.1 练</h4><ul>
+<li>频率上：锻炼效率比较高的话，每周3-4练为宜</li>
+<li>安全：适度训练，缓增难度</li>
+<li>细节：太多了，后面再说</li>
+</ul>
+<h4 id="3-2-吃"><a href="#3-2-吃" class="headerlink" title="3.2 吃"></a>3.2 吃</h4><ul>
+<li>渐尽加量，可以加补剂</li>
+</ul>
+<h4 id="3-3-睡"><a href="#3-3-睡" class="headerlink" title="3.3 睡"></a>3.3 睡</h4><ul>
+<li>如有可能，尽量早睡，肌肉是在睡眠中增长的 </li>
+</ul>
+<h4 id="3-3-上秤，照镜子"><a href="#3-3-上秤，照镜子" class="headerlink" title="3.3 上秤，照镜子"></a>3.3 上秤，照镜子</h4><ul>
+<li>建议一周观察一次 </li>
+</ul>
+<h3 id="4、说人话，讲道理"><a href="#4、说人话，讲道理" class="headerlink" title="4、说人话，讲道理"></a>4、说人话，讲道理</h3><blockquote>
+<p><code>事实</code> 人不是机器，我们普通人也没专业的教练和仪器来精准控制营养摄入，所以建议是增肌的时候，多吃蛋白和碳水，这样事实上肌肉和脂肪同时会长，尤其是肚子，容易长肉还不容易下去，但是后期可以专门刷脂刷下去<br><code>误区一</code>：多吃蛋白，不是只吃蛋白，肌肉的合成过程是肌纤维撕裂再生长，肌纤维合成需要的原料是蛋白质，但主要燃料是碳水，如果碳水不够，就会动力不足，导致肌肉增长缓慢<br><code>误区二</code>：如果家里没矿，吃鸡蛋真的没必要扔蛋黄，如果不是三高人员，一般没事的，鸡蛋里的胆固醇和血清胆固醇是两码事，普通人吃一两三个蛋黄长上去的血清胆固醇微乎其微<br><code>误区N</code>：后面再说</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/31/interface/" class="post-title-link" itemprop="url">interface 和 type的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-31 18:58:47" itemprop="dateCreated datePublished" datetime="2021-10-31T18:58:47+08:00">2021-10-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-02 17:20:12" itemprop="dateModified" datetime="2022-01-02T17:20:12+08:00">2022-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/typeScript/" itemprop="url" rel="index"><span itemprop="name">typeScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>ts 的 interface 和 type总是容易混淆， 这里记一下区别。</p>
+</blockquote>
+<ol>
+<li>功能相同点：都可以描述对象或者函数</li>
+<li>功能不同点：  </li>
+</ol>
+<ul>
+<li>interface 特有的：  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interface 可以继承interface 或者 type， 使用extends关键字</span><br><span class="line">type 继承 type/interface 用 &amp;； 比如 D 继承C，相当于扩展，type D = C &amp; &#123;age: number&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type 特有的：</li>
+</ul>
+<pre><code class="text">1.type 可以声明基本类型别名 或 联合类型 或 元组等类型
+    type age = number //基本类型别名，
+    type  WW = X | O  // 联合类型         
+    type PersonList = [Man, Women] // 元组
+     (因为写法上 interface 是没有 ‘=’ 的嘛，所以定义上面这种就不方便)    
+2.type 语句中可以使用 typeof 获取实例的 类型进行赋值
+    let div = document.createElement(&#39;div&#39;);
+    type B = typeof div
+3、其他             
+    type click&lt;T&gt; = (data: T) =&gt; void;// 用泛型作为类型的入参，描述一个函数
+    const handleClickTest: click &lt;string&gt; = (data: string) =&gt; &#123;&#125;
+    type Foo&lt;T&gt; = [T, T];  // 用泛型作为类型入参，描述一个只有两个元素的数组
+    type Tree&lt;T&gt; = T | &#123; a: Tree&lt;T&gt;, b: Tree&lt;T&gt; &#125;;
+    type StringOrNum = string | number;  
+    type StringOrObj = string | &#123; name: string &#125;;  
+    type Dictionaries = Dictionary&lt;string, Books&gt;;
+</code></pre>
+<ol start="3">
+<li>写法上的注意点<ul>
+<li>type定义 用 = 号。</li>
+<li>interface 可以 点的出来，也就是必须照着它描述的样子写函数</li>
+<li>函数的描述在名字后面用 ：， 可以使用type 或 interface；</li>
+<li>箭头函数返回值的描述， 在箭头函数的() 后面</li>
+<li>type 和 interface 可以交叉继承</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
@@ -517,8 +798,21 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-06 15:23:59" itemprop="dateModified" datetime="2021-11-06T15:23:59+08:00">2021-11-06</time>
+                <time title="修改时间：2022-01-02 15:29:14" itemprop="dateModified" datetime="2022-01-02T15:29:14+08:00">2022-01-02</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">语法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E6%B3%95/MarkDown/" itemprop="url" rel="index"><span itemprop="name">MarkDown</span></a>
+                </span>
+            </span>
 
           
 
@@ -669,7 +963,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/%E7%AC%AC%E4%B8%89%E9%A1%B5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/sentry/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/WechatIMG946.jpeg">
@@ -683,7 +977,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/21/%E7%AC%AC%E4%B8%89%E9%A1%B5/" class="post-title-link" itemprop="url">一颗蜜柚</a>
+            <a href="/2021/10/21/sentry/" class="post-title-link" itemprop="url">Markdown 语法</a>
         </h2>
 
         <div class="post-meta">
@@ -700,73 +994,21 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-31 19:22:16" itemprop="dateModified" datetime="2021-10-31T19:22:16+08:00">2021-10-31</time>
+                <time title="修改时间：2022-01-02 16:04:30" itemprop="dateModified" datetime="2022-01-02T16:04:30+08:00">2022-01-02</time>
               </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-	
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/%E7%AC%AC%E4%BA%8C%E9%A1%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
-      <meta itemprop="name" content="修远">
-      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="修远的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/21/%E7%AC%AC%E4%BA%8C%E9%A1%B5/" class="post-title-link" itemprop="url">原子弹的制造方法</a>
-        </h2>
-
-        <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
+                <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-21 21:46:18" itemprop="dateCreated datePublished" datetime="2021-10-21T21:46:18+08:00">2021-10-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%91%E6%8E%A7/" itemprop="url" rel="index"><span itemprop="name">监控</span></a>
                 </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-31 19:21:40" itemprop="dateModified" datetime="2021-10-31T19:21:40+08:00">2021-10-31</time>
-              </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%91%E6%8E%A7/sentry/" itemprop="url" rel="index"><span itemprop="name">sentry</span></a>
+                </span>
+            </span>
 
           
 
@@ -779,85 +1021,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-	
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
-      <meta itemprop="name" content="修远">
-      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="修远的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/19/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-19 13:58:04" itemprop="dateCreated datePublished" datetime="2021-10-19T13:58:04+08:00">2021-10-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-21 15:21:22" itemprop="dateModified" datetime="2021-11-21T15:21:22+08:00">2021-11-21</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo<i class="fa fa-external-link-alt"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation<i class="fa fa-external-link-alt"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting<i class="fa fa-external-link-alt"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub<i class="fa fa-external-link-alt"></i></span>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s">Writing<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=">Server<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s">Generating<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js&quot; integrity=&quot;sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio=&quot;</span><br><span class="line">   crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</span><br><span class="line"> 	 &lt;script type=&quot;text/javascript&quot; src=&quot;js/digitalRain.js&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">   	&lt;canvas id=&quot;canvas&quot; width=&quot;1920&quot; height=&quot;1080&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;js/colorTextRain.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+          <h3 id="安装-依赖"><a href="#安装-依赖" class="headerlink" title="安装 依赖"></a>安装 依赖</h3><p>  yarn add @sentry/react @sentry/tracing</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置应该在应用程序的生命周期中尽早进行。umi中 可在app.tsx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">	dsn: &quot;https://060dc6d9970442a2afa66a122e26a46c@o1092033.ingest.sentry.io/6109927&quot;,</span><br><span class="line">	integrations: [new Integrations.BrowserTracing()],</span><br><span class="line">	// 0 到 1 之间的数字，控制给定事务发送到 Sentry 的概率百分比。(0 表示 0%，1 表示 100%)同样适用于应用程序中创建的所有事务。必须定义这个或 tracesSampler 以启用跟踪。</span><br><span class="line">	tracesSampleRate: 1.0,</span><br><span class="line">	release: &#x27;test@1.0.2&#x27;,</span><br><span class="line">	beforeSend(event, hint) &#123;</span><br><span class="line">		// Check if it is an exception, and if so, show the report dialog</span><br><span class="line">		  if (event.exception) &#123;</span><br><span class="line">			  console.log(event.event_id ,&#x27;====log==&#x27;)</span><br><span class="line">			Sentry.showReportDialog(&#123; eventId: event.event_id &#125;);</span><br><span class="line">		  &#125;</span><br><span class="line">		  return event;</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="可以设置-React-Error-Boundary"><a href="#可以设置-React-Error-Boundary" class="headerlink" title="可以设置 React Error Boundary"></a>可以设置 React Error Boundary</h3><p>自定义报错UI， 可以自动发送错误到sentry ，但是这和sentry自动收集的有什么区别呢</p>
+<h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><h4 id="基本选项"><a href="#基本选项" class="headerlink" title="基本选项"></a>基本选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">  dsn: &quot;https://examplePublicKey@o0.ingest.sentry.io/0&quot;, // 生成的</span><br><span class="line">  maxBreadcrumbs: 50,</span><br><span class="line">  debug: true,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="常见选项"><a href="#常见选项" class="headerlink" title="常见选项"></a>常见选项</h4><ul>
+<li>dsn</li>
+</ul>
 
       
     </div>
@@ -941,13 +1112,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">标签</span>
+            <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -962,6 +1140,20 @@
 
       </div>
 
+	<!-- 标签云 
+		
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hooks/" rel="tag">hooks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeScript/" rel="tag">typeScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%81%A5%E8%BA%AB/" rel="tag">健身</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8D%E8%AF%8D/" rel="tag">名词</a><span class="tag-list-count">1</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+		
+	 -->
     </div>
   </aside>
   <div id="sidebar-dimmer"></div>
@@ -979,7 +1171,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heartbeat"></i>
   </span>
