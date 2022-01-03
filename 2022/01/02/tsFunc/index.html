@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/xiu.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xiu.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xiu.png">
+  <link rel="mask-icon" href="/images/xiu.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="keyof  keyof 可以得到一个由 foo 的key 组成的联合类型描述对象 到 联合类型的转换 使用 keyof  123456789101112131415161718192021222324252627282930313233interface foo &amp;#123;	name: string;	age: number;&amp;#125;type keys &#x3D; keyof foo; &#x2F;&#x2F; k">
+<meta property="og:type" content="article">
+<meta property="og:title" content="typeScript 巩固">
+<meta property="og:url" content="http://example.com/2022/01/02/tsFunc/index.html">
+<meta property="og:site_name" content="修远的个人博客">
+<meta property="og:description" content="keyof  keyof 可以得到一个由 foo 的key 组成的联合类型描述对象 到 联合类型的转换 使用 keyof  123456789101112131415161718192021222324252627282930313233interface foo &amp;#123;	name: string;	age: number;&amp;#125;type keys &#x3D; keyof foo; &#x2F;&#x2F; k">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-02T06:21:33.000Z">
+<meta property="article:modified_time" content="2022-01-03T06:25:45.905Z">
+<meta property="article:author" content="修远">
+<meta property="article:tag" content="typeScript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/02/tsFunc/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>typeScript 巩固 | 修远的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <style>
+	  @font-face {
+		font-family: 'Against SVG';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Against SVG'), url('fonts/AgainstSVG.woff') format('woff');
+    }
+  </style>
+</head>
+
+
+<body itemscope >
+   
+
+	<div class="cover-wrapper" id="cover-wrapper">
+		<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
+		<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
+		<div class="nav">
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="#home" onclick="scorll(event)">HOME</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/interesting">INTERESTING</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function scorll (event) {
+			var dom = document.getElementById('menu');
+  			dom.scrollIntoView({behavior: 'smooth', block: 'start'});
+		}
+		var dom = document.getElementById('cover-wrapper');
+		if(!(window.location.pathname === '/')) {
+			dom.style.display = 'none'
+		}
+	</script>
+ 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" integrity="sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio="
+    crossorigin="anonymous"></script>
+  	 <script type="text/javascript" src="js/digitalRain.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container" id='Home'>
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">修远的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">戒骄 戒躁</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-时光机">
+
+    <a href="/archives/" rel="section"><i class="fas fa-history fa-fw"></i>时光机</a>
+
+  </li>
+        <li class="menu-item menu-item-百宝箱">
+
+    <a href="/myPrecious/" rel="section"><i class="fas fa-toolbox fa-fw"></i>百宝箱</a>
+
+  </li>
+        <li class="menu-item menu-item-有趣知识">
+
+    <a href="/interesting/" rel="section"><i class="fas fa-ice-cream fa-fw"></i>有趣知识</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-读书">
+
+    <a href="/readBook/" rel="section"><i class="fas fa-book fa-fw"></i>读书</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-生活">
+
+    <a href="/life/" rel="section"><i class="fas fa-pizza-slice fa-fw"></i>生活</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F1YW56aGl0b25n" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/02/tsFunc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          typeScript 巩固
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-02 14:21:33" itemprop="dateCreated datePublished" datetime="2022-01-02T14:21:33+08:00">2022-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-03 14:25:45" itemprop="dateModified" datetime="2022-01-03T14:25:45+08:00">2022-01-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/typeScript/" itemprop="url" rel="index"><span itemprop="name">typeScript</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><p>keyof</p>
+<blockquote>
+<p>keyof 可以得到一个由 foo 的key 组成的联合类型<br>描述对象 到 联合类型的转换 使用 keyof</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">interface foo &#123;</span><br><span class="line">	name: string;</span><br><span class="line">	age: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type keys = keyof foo; // keys： &#x27;name&#x27; | &#x27;age&#x27;</span><br><span class="line"></span><br><span class="line">let testObj = &#123; name: &#x27;bob&#x27;, age: &#x27;22&#x27;&#125;</span><br><span class="line"></span><br><span class="line">例子： 获取对象的value值的函数</span><br><span class="line">// bad </span><br><span class="line">const getValue = (obj: object, key: string) =&gt; &#123;</span><br><span class="line">	return obj[key] // 直接这样写还会抛红</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">// es5 的泛型写在函数名后面，参数前边</span><br><span class="line">function newGetValue1&lt;T extends Object, K extends keyof T&gt;(obj: T, key: K) &#123;</span><br><span class="line">	return obj[key]</span><br><span class="line">&#125;</span><br><span class="line">newGetValue1(testObj, &#x27;age&#x27;);</span><br><span class="line"></span><br><span class="line">// or es6 good</span><br><span class="line">// 箭头函数的 泛型写在函数名等号后面，参数前面</span><br><span class="line">// 通过一个泛型，另一个泛型通过继承，就能约束到两个入参，这一来，函数的返回值确定了，也能避免出现拼写错误</span><br><span class="line">const newGetValue2 = &lt;T extends Object, K extends keyof T&gt; (obj: T , key: K) =&gt; &#123;</span><br><span class="line">	return obj[key]</span><br><span class="line">&#125;</span><br><span class="line">newGetValue2(testObj, &#x27;name&#x27;);</span><br><span class="line"></span><br><span class="line">const buildContent = (value: keys) =&gt; &#123;</span><br><span class="line">	return &lt;div&gt;my name is &#123;value&#125;&lt;/div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>in</p>
+<blockquote>
+<p>用于取联合类型的值。主要用于数组和对象的构造。<br>联合类型 =&gt; 描述对象 使用 in； </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// type Son = &#x27;jerry&#x27; | &#x27;tom&#x27;</span><br><span class="line">type BobSon = &#123;</span><br><span class="line">	[key in Son]: string</span><br><span class="line">&#125;</span><br><span class="line">const getSon = (value: BobSon) =&gt; &#123;</span><br><span class="line">	return &lt;&gt;he has a &#123;value.tom&#125;&lt;/&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>infer</p>
+<blockquote>
+<p>很强，很多地方都用到</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**  Parameters 这个ts内置方法中有用到</span><br><span class="line">*  infer： 在有条件类型的 extends 子语句中 的 true 分支中 引入一个待推断的类型变量, 允许出现多个同类型变量的 infer</span><br><span class="line">* type Parameters&lt;T extends (...args: any) =&gt; any&gt; = T extends (...args: infer P) =&gt; any ? P : never;</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">type TArea = (width: number, height: number) =&gt; number;</span><br><span class="line">type Params = Parameters&lt;TArea&gt;; // type Params = [width: number, height: number]</span><br><span class="line">const filterArr = (p: Params) =&gt; &#123;&#125; </span><br><span class="line"></span><br><span class="line">// 类似的，可以写一个获取返回值类型的方法</span><br><span class="line">// type ReturnType&lt;T extends (...args: any) =&gt; any&gt; = T extends (</span><br><span class="line">// 上面这行，这样不加 extends 也可以</span><br><span class="line">type ReturnType&lt;T&gt; = T extends (</span><br><span class="line">	...args: any</span><br><span class="line">	) =&gt; infer R </span><br><span class="line">	? R </span><br><span class="line">	: never;</span><br><span class="line">type TReturn = ReturnType&lt;TArea&gt;; // type TReturn = number</span><br><span class="line">const testReturn = (p: Params): TReturn =&gt; &#123;return 1&#125; </span><br></pre></td></tr></table></figure></li>
+<li><p>InstanceType：</p>
+<blockquote>
+<p>该类型的作用是 获取构造函数类型的实例返回值类型。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> InstanceType： 源码</span><br><span class="line">// type InstanceType&lt;T extends new (...args: any) =&gt; any&gt; = T extends new (...args: any) =&gt; infer R ? R : any;</span><br><span class="line"></span><br><span class="line">class Person &#123;</span><br><span class="line">	name: string;</span><br><span class="line">	age: number</span><br><span class="line"></span><br><span class="line">	constructor(name: string, age: number) &#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const bob = new Person(&#x27;aba&#x27;, 23);</span><br><span class="line"></span><br><span class="line">type TestInstanceType = InstanceType&lt;typeof Person&gt;</span><br><span class="line">type goOnTest1 = TestInstanceType[&#x27;name&#x27;];</span><br><span class="line">type goOnTest2 = TestInstanceType[&#x27;age&#x27;];</span><br></pre></td></tr></table></figure></li>
+<li><p>ConstructorParameters</p>
+<blockquote>
+<p>类似地，ts也内置了 ConstructorParameters，用于获取构造函数入参类型</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 源码</span><br><span class="line">type ConstructorParameters&lt;T extends new (...args: any) =&gt; any&gt; = T extends new (...args: infer P) =&gt; any ? P : never;</span><br><span class="line"></span><br><span class="line">type GetConstructorParamsType = ConstructorParameters&lt;typeof Person&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>typeof  </p>
+<blockquote>
+<p>typeof 在 JS 中 typeof 可以判断一个变量的基础数据类型，<br>在 TS 中，它还有一个作用，就是获取一个变量(值)的声明类型，如果不存在，则获取该类型的推论类型。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type ClassType =  typeof bob // 这是根据实例获取了class的类型</span><br><span class="line">let x = &#x27;3456&#x27;</span><br><span class="line">type A = typeof x // A 是 string 类型</span><br></pre></td></tr></table></figure></li>
+<li><p>ThisParameterType</p>
+<blockquote>
+<p>获取函数参数 this 的类型，</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 源码</span><br><span class="line">type ThisParameterType&lt;T&gt; = T extends (this: infer U, ...args: any) =&gt; any ? U : never;</span><br><span class="line"></span><br><span class="line">function toLower (this: string) &#123;</span><br><span class="line">	return this.toLowerCase()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 为了验证而验证</span><br><span class="line">function WordsToLower (x: ThisParameterType&lt;typeof toLower&gt;) &#123;</span><br><span class="line">	return toLower.apply(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Partial</p>
+<blockquote>
+<p>可以将某个类型里的属性全部变为可选项 ?  </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">type Partial&lt;T&gt; = &#123;</span><br><span class="line">    [P in keyof T]?: T[P]; // in 和 keyof 可以一起用， 这里的？前面其实省略了一个+，本应该是 ”+？“的</span><br><span class="line">&#125;;</span><br><span class="line">interface Foo &#123;</span><br><span class="line">	aaa: string,</span><br><span class="line">&#125;</span><br><span class="line">type testPartial = Partial&lt;Foo&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>Required</p>
+<blockquote>
+<p>是将所有类型改成必选项 </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// -？代表移除？这个modify</span><br><span class="line">type Required&lt;T&gt; = &#123;</span><br><span class="line">    [P in keyof T]-?: T[P];</span><br><span class="line">&#125;;</span><br><span class="line">interface Bar &#123;</span><br><span class="line">	bbb?: number</span><br><span class="line">&#125;</span><br><span class="line">type TestRequired = Required&lt;Bar&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>Pick</p>
+<blockquote>
+<p>将某个类型中的子属性挑出来</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type Pick&lt;T, K extends keyof T&gt; = &#123;</span><br><span class="line">    [P in K]: T[P];</span><br><span class="line">&#125;;</span><br><span class="line">type testPick = Pick&lt;Bar, &#x27;bbb&#x27;&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>Exclude </p>
+<blockquote>
+<p>在A类型中剔除 在A里也同时存在于B类型里的元素</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type Exclude&lt;T, U&gt; = T extends U ? never : T; // 如果T的元素是U中的子集，返回never，否则返回T的元素</span><br><span class="line">type T1 = &#x27;a&#x27;|&#x27;b&#x27;|&#x27;c&#x27;|&#x27;d&#x27;| &#x27;m&#x27;;</span><br><span class="line">type U1 = &#x27;c&#x27;|&#x27;d&#x27;| &#x27;n&#x27;;</span><br><span class="line"></span><br><span class="line">// T1 不包含于U1, 所以返回 T1的类型</span><br><span class="line">type W1 = T1 extends U1 ? never : T1; // W1 = &#x27;a&#x27;|&#x27;b&#x27;|&#x27;c&#x27;|&#x27;d&#x27;</span><br><span class="line"></span><br><span class="line">// 而这里返回了  T1 —（T1 ∩ U1）， 泛型里面肯定存在遍历，遍历传入的具体类型</span><br><span class="line">type xx = Exclude&lt;T1, U1&gt; // =&gt; &#x27;a&#x27; | &#x27;b&#x27; | &#x27;m&#x27;</span><br></pre></td></tr></table></figure></li>
+<li><p>Extract</p>
+<blockquote>
+<p>提取出 T 包含在 U 中的元素。 </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type Extract&lt;T, U&gt; = T extends U ? T : never;</span><br><span class="line">type eee = Extract&lt;T1, U1&gt; // &#x27;c&#x27; | &#x27;d&#x27;</span><br></pre></td></tr></table></figure></li>
+<li><p>NonNullable </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type NonNullable&lt;T&gt; = T extends null | undefined ? never : T;</span><br></pre></td></tr></table></figure></li>
+<li><p>Omit</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/** Omit 用 Pick 和 exclude实现</span><br><span class="line"> * Omit 的常见使用场景是，想要继承一个类型，并且把其中几个属性overwrite掉，如果      </span><br><span class="line"> * 不Omit，之后重写，那么类型就会不对了</span><br><span class="line"> * type Omit&lt;T, K&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;;</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">// Deferred 属性名相同，返回Promise</span><br><span class="line"> type Deferred&lt;T&gt; = &#123;</span><br><span class="line">     [P in keyof T]: Promise&lt;T[P]&gt;;</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>码字不易，赏块大洋</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weixin.jpg" alt="修远 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/typeScript/" rel="tag"># typeScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/21/effect/" rel="prev" title="对Effect的理解">
+      <i class="fa fa-chevron-left"></i> 对Effect的理解
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+	
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="修远"
+      src="/images/WechatIMG946.jpeg">
+  <p class="site-author-name" itemprop="name">修远</p>
+  <div class="site-description" itemprop="description">心有猛虎，细嗅蔷薇</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F1YW56aGl0b25n" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Quanzhitong"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+
+
+      </div>
+
+	<!-- 标签云 
+		
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hooks/" rel="tag">hooks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeScript/" rel="tag">typeScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%81%A5%E8%BA%AB/" rel="tag">健身</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8D%E8%AF%8D/" rel="tag">名词</a><span class="tag-list-count">1</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+		
+	 -->
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">修远</span>
+</div>
+
+<span id="timeDate" >载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("10/21/2021 12:34:56");//在此处修改你的建站时间，格式：月/日/年 时:分:秒
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "本站已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script async src="/js/clickFire.js"></script>
+
+  
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+   <script type="text/javascript" src="/js/snowClose.js"></script>
+   <!--浏览器搞笑标题-->
+   <script type="text/javascript" src="/js/funnyTitle.js"></script>
+</body>
+</html>
