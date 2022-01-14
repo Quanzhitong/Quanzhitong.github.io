@@ -19,20 +19,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Document   	测试222">
-<meta property="og:type" content="website">
-<meta property="og:title" content="修远的个人博客">
-<meta property="og:url" content="http://example.com/readBook/history/bbb.html">
+  <meta name="description" content="编译时编译时顾名思义就是正在编译的时候.那啥叫编译呢?就是编译器帮你把源代码翻译成机器能识别的代码.(当然只是一般意义上这么说,实际上可能只是翻译成某个中间状态的语言.比如Java只有JVM识别的字节码,C#中只有CLR能识别的MSIL.另外还有啥链接器.汇编器.为了了便于理解我可以统称为编译器) 那编译时就是简单的作一些翻译工作,比如检查老兄你有没有粗心写错啥关键字了啊.有啥词法分析,语法分析之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="概念解释">
+<meta property="og:url" content="http://example.com/2021/11/15/conceptAnalysis/index.html">
 <meta property="og:site_name" content="修远的个人博客">
-<meta property="og:description" content="Document   	测试222">
+<meta property="og:description" content="编译时编译时顾名思义就是正在编译的时候.那啥叫编译呢?就是编译器帮你把源代码翻译成机器能识别的代码.(当然只是一般意义上这么说,实际上可能只是翻译成某个中间状态的语言.比如Java只有JVM识别的字节码,C#中只有CLR能识别的MSIL.另外还有啥链接器.汇编器.为了了便于理解我可以统称为编译器) 那编译时就是简单的作一些翻译工作,比如检查老兄你有没有粗心写错啥关键字了啊.有啥词法分析,语法分析之">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-30T14:28:42.790Z">
-<meta property="article:modified_time" content="2021-10-30T14:28:42.790Z">
+<meta property="article:published_time" content="2021-11-15T13:46:18.000Z">
+<meta property="article:modified_time" content="2022-01-14T00:22:56.126Z">
 <meta property="article:author" content="修远">
 <meta property="article:tag" content="xiuyuan、修远、qzt、quanzhitong，全志同">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/readBook/history/bbb">
+<link rel="canonical" href="http://example.com/2021/11/15/conceptAnalysis/">
 
 
 <script id="page-configurations">
@@ -40,13 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title> | 修远的个人博客
-</title>
+  <title>概念解释 | 修远的个人博客</title>
   
 
 
@@ -211,127 +210,127 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
+            
+
+    
   
-
-      
-
-        
-        <ul id="sub-menu" class="sub-menu menu">
-          
-            
-          
-          
-              
-  <li class="menu-item menu-item-人物传记">
-
-    <a href="/readBook/biography/" rel="section"><i class="fas fa-book-user fa-fw"></i>人物传记</a>
-
-  </li>
-
-
-          
-          
-            
-                
-  <li class="menu-item menu-item-历史">
-
-    <a href="/readBook/history/" rel="section"><i class="fa fa-archive fa-fw"></i>历史</a>
-
-  </li>
-
-
-        </ul>
-        
-
-        
-
-                
-
-                    
-                    <ul id="sub-menu-2" class="sub-menu menu">
-                      
-                        
-  <li class="menu-item menu-item-test">
-
-    <a href="/readBook/history/aaa.html" rel="section"><i class="fa fa-archive fa-fw"></i>test</a>
-
-  </li>
-
-
-                        
-  <li class="menu-item menu-item-test2">
-
-    <a href="/readBook/history/bbb.html" rel="section"><i class="fa fa-archive fa-fw"></i>test2</a>
-
-  </li>
-
-
-                    </ul>
-                    
-                
-        
-      
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/15/conceptAnalysis/">
 
-          <div class="content page posts-expand">
-            
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
 
-    
-    
-    
-    <div class="post-block" lang="zh-CN">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          概念解释
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-<div class="post-meta">
-  
-  <ul class="breadcrumb">
+              <time title="创建时间：2021-11-15 21:46:18" itemprop="dateCreated datePublished" datetime="2021-11-15T21:46:18+08:00">2021-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-14 08:22:56" itemprop="dateModified" datetime="2022-01-14T08:22:56+08:00">2022-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">概念</span></a>
+                </span>
+            </span>
+
           
-            <li><a href="/readBook/">READBOOK</a></li>
-            <li><a href="/readBook/history/">HISTORY</a></li>
-            <li>BBB</li>
-          
-  </ul>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="编译时"><a href="#编译时" class="headerlink" title="编译时"></a>编译时</h4><p>编译时顾名思义就是正在编译的时候.那啥叫编译呢?就是<mark>编译器帮你把源代码翻译成机器能识别的代码</mark>.(当然只是一般意义上这么说,实际上可能只是翻译成某个中间状态的语言.比如Java只有JVM识别的字节码,C#中只有CLR能识别的MSIL.另外还有啥链接器.汇编器.为了了便于理解我可以统称为编译器)</p>
+<p>那编译时就是简单的作一些翻译工作,比如检查老兄你有没有粗心写错啥关键字了啊.有啥词法分析,语法分析之类的过程.<mark>就像个老师检查学生的作文中有没有错别字和病句一样</mark>.如果发现啥错误编译器就告诉你.如果你用微软的VS的话,点下build.那就开始编译,如果下面有errors或者warning信息,那都是编译器检查出来的.所谓这时的错误就叫编译时错误,这个过程中做的啥类型检查也就叫编译时类型检查,或静态类型检查(<mark>所谓静态嘛就是没把真把代码放内存中运行起来,而只是把代码当作文本来扫描下</mark>).所以有时一些人说编译时还分配内存啥的肯定是错误的说法.</p>
+<h4 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h4><p>所谓运行时就是代码跑起来了.被装载到内存中去了.(<mark>你的代码保存在磁盘上没装入内存之前是个死家伙.只有跑到内存中才变成活的</mark>).而运行时类型检查就与前面讲的编译时类型检查(或者静态类型检查)不一样.不是简单的扫描代码.而是在内存中做些操作,做些判断.</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>码字不易，赏块大洋</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weixin.jpg" alt="修远 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
 </div>
 
-</header>
 
-      
-      
-      
-      <div class="post-body">
-          <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-	测试222
-</body>
-</html>
-      </div>
-      
-      
-      
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/15/name/" rel="prev" title="前端名词扫盲大全">
+      <i class="fa fa-chevron-left"></i> 前端名词扫盲大全
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/19/index/" rel="next" title="swig速查">
+      swig速查 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
+      </footer>
     
-  <ul class="breadcrumb">
-          
-            <li><a href="/readBook/">READBOOK</a></li>
-            <li><a href="/readBook/history/">HISTORY</a></li>
-            <li>BBB</li>
-          
-  </ul>
+	
+  </article>
+  
+  
+  
 
-    
-    
-    
 
 
           </div>
@@ -382,6 +381,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6"><span class="nav-text">编译时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="nav-text">运行时</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
