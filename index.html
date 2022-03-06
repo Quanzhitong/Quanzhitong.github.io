@@ -359,7 +359,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-02 15:45:07" itemprop="dateModified" datetime="2022-01-02T15:45:07+08:00">2022-01-02</time>
+                <time title="修改时间：2022-03-06 22:03:19" itemprop="dateModified" datetime="2022-03-06T22:03:19+08:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -386,8 +386,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><b>effect译为 “副作用”，useEffect, 能够根据props和state同步React tree之外的东西。</b><br>比如<br><img src="/images/helloCode.png" ></p>
-<p>–todo</p>
+          <blockquote>
+<p>effect译为 “副作用”，useEffect, 能够根据props和state同步React tree之外的东西。比如:<br><img src="/images/helloCode.png" ></p>
+</blockquote>
+<h3 id="1、Props-和-State-在每次渲染的时候都是独立的"><a href="#1、Props-和-State-在每次渲染的时候都是独立的" class="headerlink" title="1、Props 和 State 在每次渲染的时候都是独立的"></a>1、Props 和 State 在每次渲染的时候都是独立的</h3><p>在讨论effects之前，先说一下渲染。<br>来看一个计数器组件Counter：<br><img src="/images/counter.png" ></p>
+<p>上面例子中，count仅是一个数字而已。它不是“data binding”, “watcher”, “proxy”，或者其他任何东西。它就是一个普通的数字像下面这个一样<br><img src="/images/normalNumber.png" ></p>
+<p>我们的组件第一次渲染的时候，从useState()拿到count的初始值0。当我们调用setCount(1)，React会再次渲染组件，这一次 count是1。</p>
+<p><b>当更新状态的时候，React会重新渲染组件。<font color="#D23669">每一次渲染都能拿到独立的count 状态，这个状态值是函数中的一个常量</font>。</b></p>
+<h3 id="2、事件处理函数在每次渲染的时候也是独立的"><a href="#2、事件处理函数在每次渲染的时候也是独立的" class="headerlink" title="2、事件处理函数在每次渲染的时候也是独立的"></a>2、事件处理函数在每次渲染的时候也是独立的</h3><p>看下面的这个例子。它在三秒后会alert点击次数count：<br><img src="/images/setTimeout.png" ></p>
+<p>如果我按照下面的步骤去操作：</p>
+<ol>
+<li>点击增加counter到3</li>
+<li>点击一下 “Show alert”</li>
+<li>点击增加 counter到5并且在定时器回调触发前完成</li>
+</ol>
+<img src="/images/timeout.gif" >
+
+<p>你猜alert会弹出什么？<br>会是5吗？— 这个值是alert的时候counter的实时状态。<br>或者会是3吗？— 这个值是我点击时候的状态。  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jb2Rlc2FuZGJveC5pby9zL2NsZXZlci1ibGFjay13MWRjYnI/ZmlsZT0vc3JjL2luZGV4Lmpz">可以自己试一下<i class="fa fa-external-link-alt"></i></span>！</p>
+<p><b>alert会“捕获”我点击按钮时候的状态。<font color="#D23669">这也就证明了事件处理函数在每次渲染的时候也是独立的</font></b></p>
+<h3 id="3、Effect在每次渲染的时候是独立的"><a href="#3、Effect在每次渲染的时候是独立的" class="headerlink" title="3、Effect在每次渲染的时候是独立的"></a>3、Effect在每次渲染的时候是独立的</h3><p>看下<span class="exturl" data-url="aHR0cHM6Ly9yZWFjdGpzLm9yZy9kb2NzL2hvb2tzLWVmZmVjdC5odG1s">官网文档<i class="fa fa-external-link-alt"></i></span>中的这个例子：<br><img src="/images/guanWang.png" ></p>
+<p>抛一个问题：effect是如何读取到最新的count 状态值的呢？</p>
+<blockquote>
+<p>&emsp;&emsp;已经知道count是某个特定渲染中的常量。事件处理函数“看到”的是属于它那次特定渲染中的count状态值。<br>&emsp;&emsp;对于effects也同样如此，并不是count的值在“不变”的effect中发生了改变，而是effect 函数本身在每一次渲染中都不相同。</p>
+</blockquote>
+<p>每次渲染的effect“看到”的count值都来自它当前的那次渲染：<br><img src="/images/effectRender.png" ></p>
+<p>React会记住你提供的effect函数，并且会在每次更改作用于DOM并让浏览器绘制屏幕后去调用它。</p>
+<p><b>所以虽然我们说的是一个 effect（这里指更新document的title），但<font color="#D23669">其实每次渲染都是一个不同的函数</font> — 并且每个effect函数“看到”的props和state都来自于它属于的那次特定渲染。</b></p>
+<p>概念上，可以想象effects是渲染结果的一部分。</p>
 
       
     </div>
@@ -1265,7 +1291,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-03 16:45:00" itemprop="dateModified" datetime="2022-01-03T16:45:00+08:00">2022-01-03</time>
+                <time title="修改时间：2022-03-06 21:17:03" itemprop="dateModified" datetime="2022-03-06T21:17:03+08:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1295,12 +1321,12 @@
           <h3 id="安装-依赖"><a href="#安装-依赖" class="headerlink" title="安装 依赖"></a>安装 依赖</h3><p>  yarn add @sentry/react @sentry/tracing</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置应该在应用程序的生命周期中尽早进行。umi中 可在app.tsx</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">	dsn: &quot;https://060dc6d9970442a2afa66a122e26a46c@o1092033.ingest.sentry.io/6109927&quot;,</span><br><span class="line">	integrations: [new Integrations.BrowserTracing()],</span><br><span class="line">	// 0 到 1 之间的数字，控制给定事务发送到 Sentry 的概率百分比。(0 表示 0%，1 表示 100%)同样适用于应用程序中创建的所有事务。必须定义这个或 tracesSampler 以启用跟踪。</span><br><span class="line">	tracesSampleRate: 1.0,</span><br><span class="line">	release: &#x27;test@1.0.2&#x27;,</span><br><span class="line">	beforeSend(event, hint) &#123;</span><br><span class="line">		// Check if it is an exception, and if so, show the report dialog</span><br><span class="line">		  if (event.exception) &#123;</span><br><span class="line">			  console.log(event.event_id ,&#x27;====log==&#x27;)</span><br><span class="line">			Sentry.showReportDialog(&#123; eventId: event.event_id &#125;);</span><br><span class="line">		  &#125;</span><br><span class="line">		  return event;</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="可以设置-React-Error-Boundary"><a href="#可以设置-React-Error-Boundary" class="headerlink" title="可以设置 React Error Boundary"></a>可以设置 React Error Boundary</h3><p>自定义报错UI， 可以自动发送错误到sentry ，但是这和sentry自动收集的有什么区别呢</p>
+<h3 id="可以设置-React-Error-Boundary"><a href="#可以设置-React-Error-Boundary" class="headerlink" title="可以设置 React Error Boundary"></a>可以设置 React Error Boundary</h3><p>自定义报错UI， 可以自动发送错误到sentry ，(但是这和sentry自动收集的有什么区别呢)</p>
 <h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><h4 id="基本选项"><a href="#基本选项" class="headerlink" title="基本选项"></a>基本选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">  dsn: &quot;https://examplePublicKey@o0.ingest.sentry.io/0&quot;, // 生成的</span><br><span class="line">  maxBreadcrumbs: 50,</span><br><span class="line">  debug: true,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="常见选项"><a href="#常见选项" class="headerlink" title="常见选项"></a>常见选项</h4><ul>
+<h4 id="常用配置"><a href="#常用配置" class="headerlink" title="常用配置"></a>常用配置</h4><ul>
 <li>dsn</li>
 </ul>
-
+<h4 id="待完成"><a href="#待完成" class="headerlink" title="待完成"></a>待完成</h4>
       
     </div>
 
