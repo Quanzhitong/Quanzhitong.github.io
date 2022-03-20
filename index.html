@@ -215,6 +215,149 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/20/jest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/20/jest/" class="post-title-link" itemprop="url">jest基本使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-20 17:00:10 / 修改时间：18:54:43" itemprop="dateCreated datePublished" datetime="2022-03-20T17:00:10+08:00">2022-03-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">自动化测试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/jest/" itemprop="url" rel="index"><span itemprop="name">jest</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="一、背景介绍"><a href="#一、背景介绍" class="headerlink" title="一、背景介绍"></a>一、背景介绍</h4><ul>
+<li>Jest 是一个 JavaScript 测试框架，旨在确保任何 JavaScript 代码的正确性。它提供了易于理解、熟悉且功能丰富的 API 来编写测试用例，并快速地反馈结果。</li>
+<li>Jest 拥有良好的文档，只需很少的配置，并能 根据你的需求进行扩展。 </li>
+<li>Jest是 Facebook 出的一个测试框架，相对其他测试框架，其一大特点就是就是内置了常用的测试工具，比如自带断言、测试覆盖率工具，实现了开箱即用。</li>
+</ul>
+<h4 id="二、主要特点"><a href="#二、主要特点" class="headerlink" title="二、主要特点"></a>二、主要特点</h4><ul>
+<li>零配置  <blockquote>
+<p>Jest 的目标是在大部分 JavaScript 项目上实现开箱即用， 无需配置。（基于jsmine，所以支持常用 expect、toBe、it等断言写法；内置了测试覆盖率工具istanbul，可以直接在命令行中添加 –coverage 参数开开启此功能） </p>
+</blockquote>
+</li>
+<li>快照<blockquote>
+<p>能够轻松追踪大型对象的测试。 快照可以与测试代码放在一起，也可以集成进代码 行内。（比如对 React 等常见框架的自动测试）</p>
+</blockquote>
+</li>
+<li>隔离<blockquote>
+<p>测试程序拥有自己独立的进程 以最大限度地提高性能。（并行执行）</p>
+</blockquote>
+</li>
+<li>丰富的api</li>
+</ul>
+<h4 id="三、牛刀小试"><a href="#三、牛刀小试" class="headerlink" title="三、牛刀小试"></a>三、牛刀小试</h4><h6 id="3-1-emsp-创建一个空项目"><a href="#3-1-emsp-创建一个空项目" class="headerlink" title="3.1&emsp;创建一个空项目"></a>3.1&emsp;创建一个空项目</h6><blockquote>
+<p>mkdir JestTest</p>
+</blockquote>
+<h6 id="3-2-emsp-初始化"><a href="#3-2-emsp-初始化" class="headerlink" title="3.2&emsp;初始化"></a>3.2&emsp;初始化</h6><p>  jest –init (首先全局装cli，命令：yarn global add jest )  </p>
+<blockquote>
+<p>Jest 将根据你的项目提出一系列问题，并且将创建一个基础配置文件。文件中的每一项都配有简短的说明  </p>
+</blockquote>
+<h6 id="3-3-emsp-创建文件并测试"><a href="#3-3-emsp-创建文件并测试" class="headerlink" title="3.3&emsp;创建文件并测试"></a>3.3&emsp;创建文件并测试</h6><ul>
+<li>新建 sum.js     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function sum(a, b) &#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = sum; </span><br></pre></td></tr></table></figure></li>
+<li>新建 sum.test.js  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const sum = require(&#x27;./sum&#x27;);  </span><br><span class="line">    test(&#x27;adds 1 + 2 to equal 3&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(sum(1, 2)).toBe(3); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li>在package.json 配置scripts.   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;jest&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>执行 npm run test, 结果如下<img src="/images/jestResult1.png" width="100%" >
+至此，我们已经完成了一个基本的自动化测试</li>
+</ul>
+<h6 id="3-4-emsp-如果测试ts，需要加些配置"><a href="#3-4-emsp-如果测试ts，需要加些配置" class="headerlink" title="(3.4)&emsp;如果测试ts，需要加些配置"></a>(3.4)&emsp;如果测试ts，需要加些配置</h6><ul>
+<li><p>先加几个依赖 </p>
+<blockquote>
+<p>yarn add –dev typescript babel-jest @babel/core @babel/preset-env  </p>
+</blockquote>
+</li>
+<li><p>在babel.config.js中配置  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    presets: [[&#x27;@babel/preset-env&#x27;, &#123;targets: &#123;node: &#x27;current&#x27;&#125;&#125;]],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>yarn add –dev @babel/preset-typescript  </p>
+</blockquote>
+</li>
+<li><p>然后将 babel.config.js 修改为  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        [&#x27;@babel/preset-env&#x27;, &#123;targets: &#123;node: &#x27;current&#x27;&#125;&#125;],</span><br><span class="line">        &#x27;@babel/preset-typescript&#x27;,</span><br><span class="line">    ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="四、常用匹配器"><a href="#四、常用匹配器" class="headerlink" title="四、常用匹配器"></a>四、常用匹配器</h4><h6 id="4-1-emsp-toBe"><a href="#4-1-emsp-toBe" class="headerlink" title="4.1&emsp;toBe"></a>4.1&emsp;toBe</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// toBe 内部使用Object.is 对比</span><br><span class="line">test(&#x27;adds 1 + 2 to equal 3&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(sum(1,2)).toBe(3)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-emsp-toEqual"><a href="#4-2-emsp-toEqual" class="headerlink" title="4.2&emsp;toEqual"></a>4.2&emsp;toEqual</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 对象检查 toEqual， toEqual会递归检查对象或数组的每个字段</span><br><span class="line">test(&#x27;对象赋值&#x27;, () =&gt; &#123;</span><br><span class="line">    const data = &#123;one: 1&#125;;</span><br><span class="line">    data[&#x27;two&#x27;] = 2;</span><br><span class="line">    expect(data).toEqual(&#123;one: 1, two: 2&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-3-emsp-not"><a href="#4-3-emsp-not" class="headerlink" title="4.3&emsp;not"></a>4.3&emsp;not</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// not 可以测相反</span><br><span class="line">test(&#x27;adds 1 + 2 to equal 3&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(sum(1,2)).not.toBe(4)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h6 id="4-4-emsp-数字"><a href="#4-4-emsp-数字" class="headerlink" title="4.4&emsp;数字"></a>4.4&emsp;数字</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test(&#x27;two + two&#x27;, () =&gt; &#123;</span><br><span class="line">    const value = 2 + 2;</span><br><span class="line">    expect(value).toBeGreaterThan(3);</span><br><span class="line">    expect(value).toBeGreaterThanOrEqual(3.5);</span><br><span class="line">    expect(value).toBeLessThan(5);</span><br><span class="line">    expect(value).toBeLessThanOrEqual(4.5);</span><br><span class="line">  </span><br><span class="line">    // toBe and toEqual 对于数字来说是一样的</span><br><span class="line">    expect(value).toBe(4);</span><br><span class="line">    expect(value).toEqual(4);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-5-emsp-浮点数"><a href="#4-5-emsp-浮点数" class="headerlink" title="4.5&emsp;浮点数"></a>4.5&emsp;浮点数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 对于比较浮点数相等，使用 toBeCloseTo 而不是 toEqual</span><br><span class="line">test(&#x27;两个浮点数字相加&#x27;, () =&gt; &#123;</span><br><span class="line">    const value = 0.1 + 0.2;</span><br><span class="line">    //expect(value).toBe(0.3);   这句会报错，因为浮点数有舍入误差</span><br><span class="line">    expect(value).toBeCloseTo(0.3); // 这句可以运行</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-6-emsp-字符串"><a href="#4-6-emsp-字符串" class="headerlink" title="4.6&emsp;字符串"></a>4.6&emsp;字符串</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 字符串匹配</span><br><span class="line">test(&#x27;there is no I in team&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(&#x27;team&#x27;).not.toMatch(/I/);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(&#x27;but there is a &quot;stop&quot; in Christoph&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(&#x27;Christoph&#x27;).toMatch(/stop/);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-7-emsp-数组和可迭代对象"><a href="#4-7-emsp-数组和可迭代对象" class="headerlink" title="4.7&emsp;数组和可迭代对象"></a>4.7&emsp;数组和可迭代对象</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const shoppingList = [</span><br><span class="line">    &#x27;diapers&#x27;,</span><br><span class="line">    &#x27;kleenex&#x27;,</span><br><span class="line">    &#x27;trash bags&#x27;,</span><br><span class="line">    &#x27;paper towels&#x27;,</span><br><span class="line">    &#x27;milk&#x27;,</span><br><span class="line">  ];</span><br><span class="line">  </span><br><span class="line">  test(&#x27;shoppingList数组中包含milk&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(shoppingList).toContain(&#x27;milk&#x27;);</span><br><span class="line">    expect(new Set(shoppingList)).toContain(&#x27;milk&#x27;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-8-emsp-真值"><a href="#4-8-emsp-真值" class="headerlink" title="4.8&emsp;真值"></a>4.8&emsp;真值</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">toBeNull 只匹配 null</span><br><span class="line">toBeUndefined 只匹配 undefined</span><br><span class="line">toBeDefined 与 toBeUndefined 相反</span><br><span class="line">toBeTruthy 匹配任何 if 语句为真</span><br><span class="line">toBeFalsy 匹配任何 if 语句为假</span><br></pre></td></tr></table></figure>
+<h4 id="五、异步的测试"><a href="#五、异步的测试" class="headerlink" title="五、异步的测试"></a>五、异步的测试</h4><h6 id="emsp-方式一：Promise"><a href="#emsp-方式一：Promise" class="headerlink" title="&emsp;方式一：Promise"></a>&emsp;方式一：Promise</h6><ul>
+<li>新建 promiseTest.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function promiseFn (ms = 1500) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt;  &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            resolve(&quot;I&#x27;m promise&quot;)</span><br><span class="line">        &#125;, ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default promiseFn</span><br></pre></td></tr></table></figure></li>
+<li>同级目录下新建 promiseTest.test.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import promiseFn from &#x27;./promise&#x27;;</span><br><span class="line"></span><br><span class="line">test(&#x27;Promise 的方式&#x27;, () =&gt; &#123;</span><br><span class="line">    return promiseFn().then(data =&gt; &#123;</span><br><span class="line">      expect(data).toBe(&quot;I&#x27;m promise&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="emsp-方式二：async-await"><a href="#emsp-方式二：async-await" class="headerlink" title="&emsp;方式二：async/await"></a>&emsp;方式二：async/await</h6><ul>
+<li>新建asyncTest.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function asyncFn (ms = 1500) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt;  &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            resolve(&quot;I&#x27;m asyncFn&quot;)</span><br><span class="line">        &#125;, ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default asyncFn</span><br></pre></td></tr></table></figure></li>
+<li>同级目录下新建 asyncTest.test.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import asyncFn from &#x27;./asyncTest&#x27;;</span><br><span class="line"></span><br><span class="line">test(&#x27;async/await 的方式&#x27;, async () =&gt; &#123;</span><br><span class="line">    const data = await asyncFn();</span><br><span class="line">    expect(data).toBe(&quot;I&#x27;m asyncFn&quot;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="emsp-方式三：resolves-rejects"><a href="#emsp-方式三：resolves-rejects" class="headerlink" title="&emsp;方式三：resolves/rejects"></a>&emsp;方式三：resolves/rejects</h6><ul>
+<li>testResolveFn.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function testResolveFn (ms = 1500) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt;  &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            resolve(&quot;I&#x27;m testResolveFn&quot;)</span><br><span class="line">        &#125;, ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default testResolveFn</span><br></pre></td></tr></table></figure></li>
+<li>同级新建testResolveFn.test.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(&#x27;测试.resolve的方式&#x27;, () =&gt; &#123;</span><br><span class="line">    return expect(asyncFn()).resolves.toBe(&quot;I&#x27;m testResolveFn&quot;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="emsp-方式四：回调的方式（test的回调里使用单个参数done）"><a href="#emsp-方式四：回调的方式（test的回调里使用单个参数done）" class="headerlink" title="&emsp;方式四：回调的方式（test的回调里使用单个参数done）"></a>&emsp;方式四：回调的方式（test的回调里使用单个参数done）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Jest will wait until the done callback is called before finishing the test.</span><br><span class="line">test(&#x27;the data is peanut butter&#x27;, done =&gt; &#123;</span><br><span class="line">    function callback(data) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">        expect(data).toBe(&#x27;peanut butter&#x27;);</span><br><span class="line">        done();</span><br><span class="line">        &#125; catch (error) &#123;</span><br><span class="line">        done(error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="六、生命周期及其执行时机"><a href="#六、生命周期及其执行时机" class="headerlink" title="六、生命周期及其执行时机"></a>六、生命周期及其执行时机</h4>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/10/node/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1256,92 +1399,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/sentry/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
-      <meta itemprop="name" content="修远">
-      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="修远的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/21/sentry/" class="post-title-link" itemprop="url">sentry接入react项目</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-21 21:46:18" itemprop="dateCreated datePublished" datetime="2021-10-21T21:46:18+08:00">2021-10-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-06 21:17:03" itemprop="dateModified" datetime="2022-03-06T21:17:03+08:00">2022-03-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%91%E6%8E%A7/" itemprop="url" rel="index"><span itemprop="name">监控</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%91%E6%8E%A7/sentry/" itemprop="url" rel="index"><span itemprop="name">sentry</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="安装-依赖"><a href="#安装-依赖" class="headerlink" title="安装 依赖"></a>安装 依赖</h3><p>  yarn add @sentry/react @sentry/tracing</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置应该在应用程序的生命周期中尽早进行。umi中 可在app.tsx</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">	dsn: &quot;https://060dc6d9970442a2afa66a122e26a46c@o1092033.ingest.sentry.io/6109927&quot;,</span><br><span class="line">	integrations: [new Integrations.BrowserTracing()],</span><br><span class="line">	// 0 到 1 之间的数字，控制给定事务发送到 Sentry 的概率百分比。(0 表示 0%，1 表示 100%)同样适用于应用程序中创建的所有事务。必须定义这个或 tracesSampler 以启用跟踪。</span><br><span class="line">	tracesSampleRate: 1.0,</span><br><span class="line">	release: &#x27;test@1.0.2&#x27;,</span><br><span class="line">	beforeSend(event, hint) &#123;</span><br><span class="line">		// Check if it is an exception, and if so, show the report dialog</span><br><span class="line">		  if (event.exception) &#123;</span><br><span class="line">			  console.log(event.event_id ,&#x27;====log==&#x27;)</span><br><span class="line">			Sentry.showReportDialog(&#123; eventId: event.event_id &#125;);</span><br><span class="line">		  &#125;</span><br><span class="line">		  return event;</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="可以设置-React-Error-Boundary"><a href="#可以设置-React-Error-Boundary" class="headerlink" title="可以设置 React Error Boundary"></a>可以设置 React Error Boundary</h3><p>自定义报错UI， 可以自动发送错误到sentry ，(但是这和sentry自动收集的有什么区别呢)</p>
-<h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><h4 id="基本选项"><a href="#基本选项" class="headerlink" title="基本选项"></a>基本选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">  dsn: &quot;https://examplePublicKey@o0.ingest.sentry.io/0&quot;, // 生成的</span><br><span class="line">  maxBreadcrumbs: 50,</span><br><span class="line">  debug: true,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="常用配置"><a href="#常用配置" class="headerlink" title="常用配置"></a>常用配置</h4><ul>
-<li>dsn</li>
-</ul>
-<h4 id="待完成"><a href="#待完成" class="headerlink" title="待完成"></a>待完成</h4>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-	
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1412,14 +1469,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

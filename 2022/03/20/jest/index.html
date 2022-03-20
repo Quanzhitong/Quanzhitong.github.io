@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/xiu.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xiu.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xiu.png">
+  <link rel="mask-icon" href="/images/xiu.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一、背景介绍 Jest 是一个 JavaScript 测试框架，旨在确保任何 JavaScript 代码的正确性。它提供了易于理解、熟悉且功能丰富的 API 来编写测试用例，并快速地反馈结果。 Jest 拥有良好的文档，只需很少的配置，并能 根据你的需求进行扩展。  Jest是 Facebook 出的一个测试框架，相对其他测试框架，其一大特点就是就是内置了常用的测试工具，比如自带断言、测试覆盖率工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jest基本使用">
+<meta property="og:url" content="http://example.com/2022/03/20/jest/index.html">
+<meta property="og:site_name" content="修远的个人博客">
+<meta property="og:description" content="一、背景介绍 Jest 是一个 JavaScript 测试框架，旨在确保任何 JavaScript 代码的正确性。它提供了易于理解、熟悉且功能丰富的 API 来编写测试用例，并快速地反馈结果。 Jest 拥有良好的文档，只需很少的配置，并能 根据你的需求进行扩展。  Jest是 Facebook 出的一个测试框架，相对其他测试框架，其一大特点就是就是内置了常用的测试工具，比如自带断言、测试覆盖率工">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/jestResult1.png">
+<meta property="article:published_time" content="2022-03-20T09:00:10.000Z">
+<meta property="article:modified_time" content="2022-03-20T10:54:43.305Z">
+<meta property="article:author" content="修远">
+<meta property="article:tag" content="xiuyuan、修远、qzt、quanzhitong，全志同">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/jestResult1.png">
+
+<link rel="canonical" href="http://example.com/2022/03/20/jest/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>jest基本使用 | 修远的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <style>
+	  @font-face {
+		font-family: 'Against SVG';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Against SVG'), url('fonts/AgainstSVG.woff') format('woff');
+    }
+  </style>
+</head>
+
+
+<body itemscope >
+   
+
+	<div class="cover-wrapper" id="cover-wrapper">
+		<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
+		<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
+		<div class="nav">
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="#home" onclick="scorll(event)">HOME</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/interesting">INTERESTING</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function scorll (event) {
+			var dom = document.getElementById('menu');
+  			dom.scrollIntoView({behavior: 'smooth', block: 'start'});
+		}
+		var dom = document.getElementById('cover-wrapper');
+		if(!(window.location.pathname === '/')) {
+			dom.style.display = 'none'
+		}
+	</script>
+ 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" integrity="sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio="
+    crossorigin="anonymous"></script>
+  	 <script type="text/javascript" src="js/digitalRain.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container" id='Home'>
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">修远的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">戒骄 戒躁</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-时光机">
+
+    <a href="/archives/" rel="section"><i class="fas fa-history fa-fw"></i>时光机</a>
+
+  </li>
+        <li class="menu-item menu-item-百宝箱">
+
+    <a href="/myPrecious/" rel="section"><i class="fas fa-toolbox fa-fw"></i>百宝箱</a>
+
+  </li>
+        <li class="menu-item menu-item-有趣知识">
+
+    <a href="/interesting/" rel="section"><i class="fas fa-ice-cream fa-fw"></i>有趣知识</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-读书">
+
+    <a href="/readBook/" rel="section"><i class="fas fa-book fa-fw"></i>读书</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-生活">
+
+    <a href="/life/" rel="section"><i class="fas fa-pizza-slice fa-fw"></i>生活</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F1YW56aGl0b25n" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/20/jest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jest基本使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-20 17:00:10 / 修改时间：18:54:43" itemprop="dateCreated datePublished" datetime="2022-03-20T17:00:10+08:00">2022-03-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">自动化测试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/jest/" itemprop="url" rel="index"><span itemprop="name">jest</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="一、背景介绍"><a href="#一、背景介绍" class="headerlink" title="一、背景介绍"></a>一、背景介绍</h4><ul>
+<li>Jest 是一个 JavaScript 测试框架，旨在确保任何 JavaScript 代码的正确性。它提供了易于理解、熟悉且功能丰富的 API 来编写测试用例，并快速地反馈结果。</li>
+<li>Jest 拥有良好的文档，只需很少的配置，并能 根据你的需求进行扩展。 </li>
+<li>Jest是 Facebook 出的一个测试框架，相对其他测试框架，其一大特点就是就是内置了常用的测试工具，比如自带断言、测试覆盖率工具，实现了开箱即用。</li>
+</ul>
+<h4 id="二、主要特点"><a href="#二、主要特点" class="headerlink" title="二、主要特点"></a>二、主要特点</h4><ul>
+<li>零配置  <blockquote>
+<p>Jest 的目标是在大部分 JavaScript 项目上实现开箱即用， 无需配置。（基于jsmine，所以支持常用 expect、toBe、it等断言写法；内置了测试覆盖率工具istanbul，可以直接在命令行中添加 –coverage 参数开开启此功能） </p>
+</blockquote>
+</li>
+<li>快照<blockquote>
+<p>能够轻松追踪大型对象的测试。 快照可以与测试代码放在一起，也可以集成进代码 行内。（比如对 React 等常见框架的自动测试）</p>
+</blockquote>
+</li>
+<li>隔离<blockquote>
+<p>测试程序拥有自己独立的进程 以最大限度地提高性能。（并行执行）</p>
+</blockquote>
+</li>
+<li>丰富的api</li>
+</ul>
+<h4 id="三、牛刀小试"><a href="#三、牛刀小试" class="headerlink" title="三、牛刀小试"></a>三、牛刀小试</h4><h6 id="3-1-emsp-创建一个空项目"><a href="#3-1-emsp-创建一个空项目" class="headerlink" title="3.1&emsp;创建一个空项目"></a>3.1&emsp;创建一个空项目</h6><blockquote>
+<p>mkdir JestTest</p>
+</blockquote>
+<h6 id="3-2-emsp-初始化"><a href="#3-2-emsp-初始化" class="headerlink" title="3.2&emsp;初始化"></a>3.2&emsp;初始化</h6><p>  jest –init (首先全局装cli，命令：yarn global add jest )  </p>
+<blockquote>
+<p>Jest 将根据你的项目提出一系列问题，并且将创建一个基础配置文件。文件中的每一项都配有简短的说明  </p>
+</blockquote>
+<h6 id="3-3-emsp-创建文件并测试"><a href="#3-3-emsp-创建文件并测试" class="headerlink" title="3.3&emsp;创建文件并测试"></a>3.3&emsp;创建文件并测试</h6><ul>
+<li>新建 sum.js     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function sum(a, b) &#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = sum; </span><br></pre></td></tr></table></figure></li>
+<li>新建 sum.test.js  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const sum = require(&#x27;./sum&#x27;);  </span><br><span class="line">    test(&#x27;adds 1 + 2 to equal 3&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(sum(1, 2)).toBe(3); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li>在package.json 配置scripts.   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;jest&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>执行 npm run test, 结果如下<img src="/images/jestResult1.png" width="100%" >
+至此，我们已经完成了一个基本的自动化测试</li>
+</ul>
+<h6 id="3-4-emsp-如果测试ts，需要加些配置"><a href="#3-4-emsp-如果测试ts，需要加些配置" class="headerlink" title="(3.4)&emsp;如果测试ts，需要加些配置"></a>(3.4)&emsp;如果测试ts，需要加些配置</h6><ul>
+<li><p>先加几个依赖 </p>
+<blockquote>
+<p>yarn add –dev typescript babel-jest @babel/core @babel/preset-env  </p>
+</blockquote>
+</li>
+<li><p>在babel.config.js中配置  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    presets: [[&#x27;@babel/preset-env&#x27;, &#123;targets: &#123;node: &#x27;current&#x27;&#125;&#125;]],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>yarn add –dev @babel/preset-typescript  </p>
+</blockquote>
+</li>
+<li><p>然后将 babel.config.js 修改为  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        [&#x27;@babel/preset-env&#x27;, &#123;targets: &#123;node: &#x27;current&#x27;&#125;&#125;],</span><br><span class="line">        &#x27;@babel/preset-typescript&#x27;,</span><br><span class="line">    ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="四、常用匹配器"><a href="#四、常用匹配器" class="headerlink" title="四、常用匹配器"></a>四、常用匹配器</h4><h6 id="4-1-emsp-toBe"><a href="#4-1-emsp-toBe" class="headerlink" title="4.1&emsp;toBe"></a>4.1&emsp;toBe</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// toBe 内部使用Object.is 对比</span><br><span class="line">test(&#x27;adds 1 + 2 to equal 3&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(sum(1,2)).toBe(3)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-emsp-toEqual"><a href="#4-2-emsp-toEqual" class="headerlink" title="4.2&emsp;toEqual"></a>4.2&emsp;toEqual</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 对象检查 toEqual， toEqual会递归检查对象或数组的每个字段</span><br><span class="line">test(&#x27;对象赋值&#x27;, () =&gt; &#123;</span><br><span class="line">    const data = &#123;one: 1&#125;;</span><br><span class="line">    data[&#x27;two&#x27;] = 2;</span><br><span class="line">    expect(data).toEqual(&#123;one: 1, two: 2&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-3-emsp-not"><a href="#4-3-emsp-not" class="headerlink" title="4.3&emsp;not"></a>4.3&emsp;not</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// not 可以测相反</span><br><span class="line">test(&#x27;adds 1 + 2 to equal 3&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(sum(1,2)).not.toBe(4)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h6 id="4-4-emsp-数字"><a href="#4-4-emsp-数字" class="headerlink" title="4.4&emsp;数字"></a>4.4&emsp;数字</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test(&#x27;two + two&#x27;, () =&gt; &#123;</span><br><span class="line">    const value = 2 + 2;</span><br><span class="line">    expect(value).toBeGreaterThan(3);</span><br><span class="line">    expect(value).toBeGreaterThanOrEqual(3.5);</span><br><span class="line">    expect(value).toBeLessThan(5);</span><br><span class="line">    expect(value).toBeLessThanOrEqual(4.5);</span><br><span class="line">  </span><br><span class="line">    // toBe and toEqual 对于数字来说是一样的</span><br><span class="line">    expect(value).toBe(4);</span><br><span class="line">    expect(value).toEqual(4);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-5-emsp-浮点数"><a href="#4-5-emsp-浮点数" class="headerlink" title="4.5&emsp;浮点数"></a>4.5&emsp;浮点数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 对于比较浮点数相等，使用 toBeCloseTo 而不是 toEqual</span><br><span class="line">test(&#x27;两个浮点数字相加&#x27;, () =&gt; &#123;</span><br><span class="line">    const value = 0.1 + 0.2;</span><br><span class="line">    //expect(value).toBe(0.3);   这句会报错，因为浮点数有舍入误差</span><br><span class="line">    expect(value).toBeCloseTo(0.3); // 这句可以运行</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-6-emsp-字符串"><a href="#4-6-emsp-字符串" class="headerlink" title="4.6&emsp;字符串"></a>4.6&emsp;字符串</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 字符串匹配</span><br><span class="line">test(&#x27;there is no I in team&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(&#x27;team&#x27;).not.toMatch(/I/);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(&#x27;but there is a &quot;stop&quot; in Christoph&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(&#x27;Christoph&#x27;).toMatch(/stop/);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-7-emsp-数组和可迭代对象"><a href="#4-7-emsp-数组和可迭代对象" class="headerlink" title="4.7&emsp;数组和可迭代对象"></a>4.7&emsp;数组和可迭代对象</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const shoppingList = [</span><br><span class="line">    &#x27;diapers&#x27;,</span><br><span class="line">    &#x27;kleenex&#x27;,</span><br><span class="line">    &#x27;trash bags&#x27;,</span><br><span class="line">    &#x27;paper towels&#x27;,</span><br><span class="line">    &#x27;milk&#x27;,</span><br><span class="line">  ];</span><br><span class="line">  </span><br><span class="line">  test(&#x27;shoppingList数组中包含milk&#x27;, () =&gt; &#123;</span><br><span class="line">    expect(shoppingList).toContain(&#x27;milk&#x27;);</span><br><span class="line">    expect(new Set(shoppingList)).toContain(&#x27;milk&#x27;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h6 id="4-8-emsp-真值"><a href="#4-8-emsp-真值" class="headerlink" title="4.8&emsp;真值"></a>4.8&emsp;真值</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">toBeNull 只匹配 null</span><br><span class="line">toBeUndefined 只匹配 undefined</span><br><span class="line">toBeDefined 与 toBeUndefined 相反</span><br><span class="line">toBeTruthy 匹配任何 if 语句为真</span><br><span class="line">toBeFalsy 匹配任何 if 语句为假</span><br></pre></td></tr></table></figure>
+<h4 id="五、异步的测试"><a href="#五、异步的测试" class="headerlink" title="五、异步的测试"></a>五、异步的测试</h4><h6 id="emsp-方式一：Promise"><a href="#emsp-方式一：Promise" class="headerlink" title="&emsp;方式一：Promise"></a>&emsp;方式一：Promise</h6><ul>
+<li>新建 promiseTest.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function promiseFn (ms = 1500) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt;  &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            resolve(&quot;I&#x27;m promise&quot;)</span><br><span class="line">        &#125;, ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default promiseFn</span><br></pre></td></tr></table></figure></li>
+<li>同级目录下新建 promiseTest.test.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import promiseFn from &#x27;./promise&#x27;;</span><br><span class="line"></span><br><span class="line">test(&#x27;Promise 的方式&#x27;, () =&gt; &#123;</span><br><span class="line">    return promiseFn().then(data =&gt; &#123;</span><br><span class="line">      expect(data).toBe(&quot;I&#x27;m promise&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="emsp-方式二：async-await"><a href="#emsp-方式二：async-await" class="headerlink" title="&emsp;方式二：async/await"></a>&emsp;方式二：async/await</h6><ul>
+<li>新建asyncTest.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function asyncFn (ms = 1500) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt;  &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            resolve(&quot;I&#x27;m asyncFn&quot;)</span><br><span class="line">        &#125;, ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default asyncFn</span><br></pre></td></tr></table></figure></li>
+<li>同级目录下新建 asyncTest.test.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import asyncFn from &#x27;./asyncTest&#x27;;</span><br><span class="line"></span><br><span class="line">test(&#x27;async/await 的方式&#x27;, async () =&gt; &#123;</span><br><span class="line">    const data = await asyncFn();</span><br><span class="line">    expect(data).toBe(&quot;I&#x27;m asyncFn&quot;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="emsp-方式三：resolves-rejects"><a href="#emsp-方式三：resolves-rejects" class="headerlink" title="&emsp;方式三：resolves/rejects"></a>&emsp;方式三：resolves/rejects</h6><ul>
+<li>testResolveFn.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function testResolveFn (ms = 1500) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt;  &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            resolve(&quot;I&#x27;m testResolveFn&quot;)</span><br><span class="line">        &#125;, ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default testResolveFn</span><br></pre></td></tr></table></figure></li>
+<li>同级新建testResolveFn.test.js<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(&#x27;测试.resolve的方式&#x27;, () =&gt; &#123;</span><br><span class="line">    return expect(asyncFn()).resolves.toBe(&quot;I&#x27;m testResolveFn&quot;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="emsp-方式四：回调的方式（test的回调里使用单个参数done）"><a href="#emsp-方式四：回调的方式（test的回调里使用单个参数done）" class="headerlink" title="&emsp;方式四：回调的方式（test的回调里使用单个参数done）"></a>&emsp;方式四：回调的方式（test的回调里使用单个参数done）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Jest will wait until the done callback is called before finishing the test.</span><br><span class="line">test(&#x27;the data is peanut butter&#x27;, done =&gt; &#123;</span><br><span class="line">    function callback(data) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">        expect(data).toBe(&#x27;peanut butter&#x27;);</span><br><span class="line">        done();</span><br><span class="line">        &#125; catch (error) &#123;</span><br><span class="line">        done(error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="六、生命周期及其执行时机"><a href="#六、生命周期及其执行时机" class="headerlink" title="六、生命周期及其执行时机"></a>六、生命周期及其执行时机</h4>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>码字不易，赏块大洋</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weixin.jpg" alt="修远 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/10/node/" rel="prev" title="node基础回顾">
+      <i class="fa fa-chevron-left"></i> node基础回顾
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+	
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-text">一、背景介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9"><span class="nav-text">二、主要特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%89%9B%E5%88%80%E5%B0%8F%E8%AF%95"><span class="nav-text">三、牛刀小试</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-1-emsp-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A9%BA%E9%A1%B9%E7%9B%AE"><span class="nav-text">3.1 创建一个空项目</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-emsp-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">3.2 初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-3-emsp-%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%B9%B6%E6%B5%8B%E8%AF%95"><span class="nav-text">3.3 创建文件并测试</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-emsp-%E5%A6%82%E6%9E%9C%E6%B5%8B%E8%AF%95ts%EF%BC%8C%E9%9C%80%E8%A6%81%E5%8A%A0%E4%BA%9B%E9%85%8D%E7%BD%AE"><span class="nav-text">(3.4) 如果测试ts，需要加些配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%B8%B8%E7%94%A8%E5%8C%B9%E9%85%8D%E5%99%A8"><span class="nav-text">四、常用匹配器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-1-emsp-toBe"><span class="nav-text">4.1 toBe</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-emsp-toEqual"><span class="nav-text">4.2 toEqual</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-emsp-not"><span class="nav-text">4.3 not</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-4-emsp-%E6%95%B0%E5%AD%97"><span class="nav-text">4.4 数字</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-5-emsp-%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-text">4.5 浮点数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-6-emsp-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">4.6 字符串</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-7-emsp-%E6%95%B0%E7%BB%84%E5%92%8C%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1"><span class="nav-text">4.7 数组和可迭代对象</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-8-emsp-%E7%9C%9F%E5%80%BC"><span class="nav-text">4.8 真值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%BC%82%E6%AD%A5%E7%9A%84%E6%B5%8B%E8%AF%95"><span class="nav-text">五、异步的测试</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9APromise"><span class="nav-text"> 方式一：Promise</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9Aasync-await"><span class="nav-text"> 方式二：async&#x2F;await</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9Aresolves-rejects"><span class="nav-text"> 方式三：resolves&#x2F;rejects</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-%E6%96%B9%E5%BC%8F%E5%9B%9B%EF%BC%9A%E5%9B%9E%E8%B0%83%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%88test%E7%9A%84%E5%9B%9E%E8%B0%83%E9%87%8C%E4%BD%BF%E7%94%A8%E5%8D%95%E4%B8%AA%E5%8F%82%E6%95%B0done%EF%BC%89"><span class="nav-text"> 方式四：回调的方式（test的回调里使用单个参数done）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%8A%E5%85%B6%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA"><span class="nav-text">六、生命周期及其执行时机</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="修远"
+      src="/images/WechatIMG946.jpeg">
+  <p class="site-author-name" itemprop="name">修远</p>
+  <div class="site-description" itemprop="description">心有猛虎，细嗅蔷薇</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F1YW56aGl0b25n" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Quanzhitong"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+
+
+      </div>
+
+	<!-- 标签云 
+		
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hooks/" rel="tag">hooks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeScript/" rel="tag">typeScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%81%A5%E8%BA%AB/" rel="tag">健身</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8D%E8%AF%8D/" rel="tag">名词</a><span class="tag-list-count">1</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+		
+	 -->
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">修远</span>
+</div>
+
+<span id="timeDate" >载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("10/21/2021 12:34:56");//在此处修改你的建站时间，格式：月/日/年 时:分:秒
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "本站已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script async src="/js/clickFire.js"></script>
+
+  
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+   <script type="text/javascript" src="/js/snowClose.js"></script>
+   <!--浏览器搞笑标题-->
+   <script type="text/javascript" src="/js/funnyTitle.js"></script>
+</body>
+</html>
