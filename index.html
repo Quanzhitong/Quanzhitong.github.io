@@ -215,6 +215,156 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/04/react18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/04/react18/" class="post-title-link" itemprop="url">React18, 终于来了</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-04 18:33:18 / 修改时间：22:16:54" itemprop="dateCreated datePublished" datetime="2022-04-04T18:33:18+08:00">2022-04-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/react18/" itemprop="url" rel="index"><span itemprop="name">react18</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><blockquote>
+<ul>
+<li>2022-3-29，react18正式发布。</li>
+<li>新增了些非常实用的新特性，同时也没有额外的升级成本<img src="/images/react18Compare.png" width="100%" ></li>
+</ul>
+</blockquote>
+<h3 id="二、新功能"><a href="#二、新功能" class="headerlink" title="二、新功能"></a>二、新功能</h3><h4 id="2-1-自动批量更新"><a href="#2-1-自动批量更新" class="headerlink" title="2.1 自动批量更新"></a>2.1 自动批量更新</h4><p>&emsp;&emsp; 在18之前，只支持 React 事件处理程序内的更新；现在支持 Promise、setTimeout、native event handlers 等，（个人理解：相当于把unstable_batchedUpdates 改为了默认行为，再也不用到处unstable_batchedUpdates了），当然，如果不想自动批量更新，react还留了API，可以通过flushSync这个方法，单独去更新state。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Before: 仅仅 React events 会批量更新.</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  setCount(c =&gt; c + 1);</span><br><span class="line">  setFlag(f =&gt; !f);</span><br><span class="line">  // 这种情况下会导致渲染两次，因为更新了两次state，所以在异步的更新里我们通常会把多个state更新包在unstable_batchedUpdates里</span><br><span class="line">&#125;, 1000);</span><br><span class="line"></span><br><span class="line">// After: 在 timeouts, promises,native event handlers里都会批量更新</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  setCount(c =&gt; c + 1);</span><br><span class="line">  setFlag(f =&gt; !f);</span><br><span class="line">  // state合并更新，只渲染一次</span><br><span class="line">&#125;, 1000);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-过渡（Transitions）"><a href="#2-2-过渡（Transitions）" class="headerlink" title="2.2 过渡（Transitions）"></a>2.2 过渡（Transitions）</h4><p>   Transitions 是 介于紧急更新和非紧急更新中间的一个新概念。</p>
+<ul>
+<li>紧急更新：最直击的交互，点击按钮、输入内容等</li>
+<li>过渡 更新 ：从一个UI切换到另一个UI的中间态</li>
+</ul>
+<p>&emsp;&emsp;非hook环境下可以使用 React.startTransiton(scope)，scope 是一个回调函数，里面的更新任务都会被标记成过渡更新任务，过渡更新任务在渲染并发场景下，会被降级更新优先级，中断更新。<br><img src="/images/startTransition.png" width="100%" ></p>
+<p>&emsp;&emsp;可以看到，本身startTransiton的函数很简单，就是把任务做了个标记（改成了1），执行完任务之后，再把ReactCurrentBatchConfig 改回原来状态，而 ReactCurrentBatchConfig 更简单,只有三行代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* Keeps track of the current batch&#x27;s configuration such as how long an update</span><br><span class="line">* should suspend for if it needs to.</span><br><span class="line">*/</span><br><span class="line">const ReactCurrentBatchConfig = &#123;</span><br><span class="line">    transition: (0: number),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default ReactCurrentBatchConfig;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;以上只是标记过渡任务的源码，具体的并发方式下降低过渡更新任务优先级，以及多个任务权重计算机制，感兴趣的同学可自行研究</p>
+<h4 id="2-3-Suspense"><a href="#2-3-Suspense" class="headerlink" title="2.3 Suspense"></a>2.3 Suspense</h4><p>&emsp;&emsp;声明性地指定组件树中尚未准备好显示的部分的加载状态: &lt; Suspense callback={spin}&gt;。<br>&emsp;&emsp;Suspense在上个版本就可以和 React.lazy 结合使用做 code splitting，只不过当时在服务端不支持，react18之后，添加了对服务端的支持。Suspense 结合了 transition，如果 Transition 暂停，已可见的内容不会被 fallback 取代，而是会等有足够数据时才做延迟渲染。<br>   例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Suspense fallback=&#123;&lt;Spinner /&gt;&#125;&gt;</span><br><span class="line">    &lt;Comments /&gt;</span><br><span class="line">&lt;/Suspense&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-新的客户端-服务端渲染API"><a href="#2-4-新的客户端-服务端渲染API" class="headerlink" title="2.4 新的客户端/服务端渲染API"></a>2.4 新的客户端/服务端渲染API</h4><ul>
+<li> 从 react-dom/client 导出<blockquote>
+<p>createRoot 和 hydrateRoot 代替之前的 render 和 hydrate，render 和 hydrate 虽然能用，但会抛警告，并且不会具备并发功能</p>
+</blockquote>
+</li>
+<li>从 react-dom/server 导出<blockquote>
+<p>支持 streaming Suspense。API 包含 renderToPipeableStream 和 renderToReadableStream。</p>
+</blockquote>
+</li>
+<li>renderToString 继续工作，但不鼓励使用。</li>
+</ul>
+<h4 id="2-5-新的严格模式"><a href="#2-5-新的严格模式" class="headerlink" title="2.5 新的严格模式"></a>2.5 新的严格模式</h4><p>官网中说：</p>
+<blockquote>
+<p>在未来，我们希望添加一个特性，允许 React 添加和删除 UI 的部分，同时保留状态。例如，当用户选项卡远离屏幕并返回时，React 应该能够立即显示前一个屏幕。为此，React 将使用与前面相同的组件状态卸载和重新挂载树。 </p>
+</blockquote>
+<p>   翻译一下是这样的：</p>
+<blockquote>
+<p>&emsp; react 未来想要增加一种能力：组件卸载但却保留状态的能力（卸不干净），现在先发布了个严格模式的检查，这个模式一旦开启，会在开发环境模拟组件的挂载和卸载（以检查潜在的问题）。为什么要搞这个？举了个选项卡的例子，当用户切到选项卡之外的时候，就把组件“卸载”掉（状态没丢，只是DOM没了），再切回来的时候，数据还在, 虽然对于开发者它卸不干净，但是从用户的角度来看，它们呈现的效果是相同的。（目的就是体验更好）。<br>   &emsp; 目前如果要做到它上面说的这个卸载组件但保留状态的能力，八成得依赖外部的能力，比如redux或者浏览器缓存。 </p>
+</blockquote>
+<p>   <font color="#D23669">PS：</font>严格模式检查仅在开发模式下运行，不会影响生产构建。</p>
+<h3 id="三、新hook"><a href="#三、新hook" class="headerlink" title="三、新hook"></a>三、新hook</h3><h4 id="3-1-useId"><a href="#3-1-useId" class="headerlink" title="3.1 useId()"></a>3.1 useId()</h4><blockquote>
+<p>主要用于在客户机和服务器上生成唯一的 id，同时避免hydration不匹配。它主要用于组件库与需要唯一 id 的可访问性 api 集成。这解决了一个在 React 17及以下版本中已经存在的问题，但是在 React 18中这个问题更加重要，因为新的媒体伺服器渲染器是如何无序地传递 HTML 的。</p>
+</blockquote>
+<p>   解释一下：<br>   如果是CSR，这样渲染没什么问题。<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// App.tsx</span><br><span class="line"> const id = Math.random();</span><br><span class="line"> </span><br><span class="line"> export default function App() &#123;</span><br><span class="line">   return &lt;div id=&#123;id&#125;&gt;Hello&lt;/div&gt;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>   但如果应用是SSR，那么App.tsx会经历：  </p>
+<ol>
+<li>React在服务端渲染，生成随机id（假设为0.1234），这一步叫dehydrate（脱水）</li>
+<li><code>&lt;div id=&quot;0.12345&quot;&gt;Hello&lt;/div&gt;</code>作为HTML传递给客户端，作为首屏内容</li>
+<li>React在客户端渲染，生成随机id（假设为0.6789），这一步叫hydrate（注水）</li>
+</ol>
+<p>   就会出现客户端、服务端生成的id不匹配问题</p>
+<h4 id="3-2-useTransition"><a href="#3-2-useTransition" class="headerlink" title="3.2 useTransition()"></a>3.2 useTransition()</h4><p>   简单来说，这个hook相比startTransiton，可额外获取过渡期间的状态 isPending，可以在此时做些过渡优化，使用如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function App() &#123;</span><br><span class="line">    const [isPending, startTransition] = useTransition();</span><br><span class="line">    const [count, setCount] = useState(0);</span><br><span class="line"></span><br><span class="line">    function handleClick() &#123;</span><br><span class="line">        startTransition(() =&gt; &#123;</span><br><span class="line">        setCount(c =&gt; c + 1);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">        &#123;isPending &amp;&amp; &lt;Spinner /&gt;&#125;</span><br><span class="line">        &lt;button onClick=&#123;handleClick&#125;&gt;&#123;count&#125;&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PS：hook环境使用useTransition()，非hook环境使用React.startTransiton(scope)</p>
+</blockquote>
+<h4 id="3-3-useDeferredValue"><a href="#3-3-useDeferredValue" class="headerlink" title="3.3 useDeferredValue"></a>3.3 useDeferredValue</h4><p>&emsp;&emsp;非紧急部分的延迟渲染，这个hook类似于使用debouncing或throttling来延迟更新的用户空间hook。使用 useDeferredValue ，一旦其他工作结束，React 将立即更新(不会有任何时间的等待) ，并且和 startTransition 一样，延迟值可以暂停，等到数据足够的时候再延迟渲染，有点像debounce，但是相比于debounce有点优势——没有固定的延迟时间，所以不用手动指定延迟时间，而且不会阻塞用户输入。使用方法：<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const deferredValue = useDeferredValue(value);  </span><br></pre></td></tr></table></figure></p>
+<h4 id="3-4-两个外部库相关的hook"><a href="#3-4-两个外部库相关的hook" class="headerlink" title="3.4 两个外部库相关的hook"></a>3.4 两个外部库相关的hook</h4><ul>
+<li>useSyncExternalStore， 实现外部数据源的订阅时使用</li>
+<li>useInsertionEffect 允许 CSS-in-JS 库解决渲染中注入样式的性能问题。除非已经构建了一个 CSS-in-JS 库，否则我们不希望您使用它。</li>
+</ul>
+<h3 id="四、兼容性"><a href="#四、兼容性" class="headerlink" title="四、兼容性"></a>四、兼容性</h3><p>&emsp;&emsp;因为在 React 18中引入的新特性是使用现代浏览器的特性构建的，React 18 已经放弃对 IE 11 的支持，有兼容 IE 的需求需要继续使用 React 17。</p>
+<h3 id="五、如何升级"><a href="#五、如何升级" class="headerlink" title="五、如何升级"></a>五、如何升级</h3><ol>
+<li>更新 react、 react-dom 到18.0.0</li>
+<li>使用createRoot</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Before</span><br><span class="line">import &#123; render &#125; from &#x27;react-dom&#x27;;</span><br><span class="line">const container = document.getElementById(&#x27;app&#x27;);</span><br><span class="line">render(&lt;App tab=&quot;home&quot; /&gt;, container);</span><br><span class="line"></span><br><span class="line">// After</span><br><span class="line">import &#123; createRoot &#125; from &#x27;react-dom/client&#x27;;</span><br><span class="line">const container = document.getElementById(&#x27;app&#x27;);</span><br><span class="line">const root = createRoot(container);</span><br><span class="line">root.render(&lt;App tab=&quot;home&quot; /&gt;);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>考虑三方应用的支持     </li>
+</ol>
+<h3 id="六、一目了然"><a href="#六、一目了然" class="headerlink" title="六、一目了然"></a>六、一目了然</h3><img src="/images/react18.png" width="100%" >
+
+<p>参考文档：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdGpzLm9yZy9ibG9nLzIwMjIvMDMvMjkvcmVhY3QtdjE4Lmh0bWw=">官网<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj15dHVkSDhqZTVrbyZsaXN0PVBMTkdfMWozY1BDYVpaN2V0a3pXQTdKZmRtS1dUMHBNc2EmaW5kZXg9Mw==">视频演示<i class="fa fa-external-link-alt"></i></span>，可能听不懂，但一定能看懂</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDA0MTAyMDU2Ng==">某热心网友<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/20/jest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1263,205 +1413,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/markdown/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
-      <meta itemprop="name" content="修远">
-      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="修远的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/21/markdown/" class="post-title-link" itemprop="url">Markdown 语法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-21 21:46:18" itemprop="dateCreated datePublished" datetime="2021-10-21T21:46:18+08:00">2021-10-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-03 14:29:23" itemprop="dateModified" datetime="2022-01-03T14:29:23+08:00">2022-01-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">语法</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%AD%E6%B3%95/MarkDown/" itemprop="url" rel="index"><span itemprop="name">MarkDown</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1、标题-（文字底部用-和-标记一级和二级标题）"><a href="#1、标题-（文字底部用-和-标记一级和二级标题）" class="headerlink" title="1、标题 （文字底部用 = 和 - 标记一级和二级标题）"></a>1、标题 （文字底部用 = 和 - 标记一级和二级标题）</h3><blockquote>
-<h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h1 id="比如一级标题"><a href="#比如一级标题" class="headerlink" title="比如一级标题"></a>比如一级标题</h1></blockquote>
-<h3 id="2、换行-（段落的换行是行尾两个以上的空格-回车）"><a href="#2、换行-（段落的换行是行尾两个以上的空格-回车）" class="headerlink" title="2、换行 （段落的换行是行尾两个以上的空格 + 回车）"></a>2、换行 （段落的换行是行尾两个以上的空格 + 回车）</h3><p>比如这是一行<br>这又是一行  </p>
-<h3 id="3、字体-（markdown可以使用三种字体）"><a href="#3、字体-（markdown可以使用三种字体）" class="headerlink" title="3、字体 （markdown可以使用三种字体）"></a>3、字体 （markdown可以使用三种字体）</h3><ul>
-<li><code>_斜体_</code> <em>斜体文本</em></li>
-<li><code>__粗体__</code> <strong>粗体文本</strong></li>
-<li><code>___粗斜体___</code> <em><strong>粗斜体</strong></em>   </li>
-</ul>
-<h3 id="4、分割线-（一行中用三个以上的星号、减号、底线来建立分割线，行内不能有其他东西，可以有空格）"><a href="#4、分割线-（一行中用三个以上的星号、减号、底线来建立分割线，行内不能有其他东西，可以有空格）" class="headerlink" title="4、分割线 （一行中用三个以上的星号、减号、底线来建立分割线，行内不能有其他东西，可以有空格）"></a>4、分割线 （一行中用三个以上的星号、减号、底线来建立分割线，行内不能有其他东西，可以有空格）</h3><ul>
-<li><code>***/*   *</code></li>
-</ul>
-<hr>
-<ul>
-<li><code>------</code> </li>
-</ul>
-<hr>
-<ul>
-<li><code>______</code></li>
-</ul>
-<hr>
-<h3 id="5、删除线-（文字两端加两个英文波浪线-）"><a href="#5、删除线-（文字两端加两个英文波浪线-）" class="headerlink" title="5、删除线 （文字两端加两个英文波浪线~~）"></a>5、删除线 （文字两端加两个英文波浪线~~）</h3><p>比如 <code>~~删除~~</code> <del>删除内容</del>  </p>
-<h3 id="6、下划线（用HTML的标签-lt-u-gt-文字-lt-u-gt-）"><a href="#6、下划线（用HTML的标签-lt-u-gt-文字-lt-u-gt-）" class="headerlink" title="6、下划线（用HTML的标签&lt;u&gt;文字&lt;/u&gt;）"></a>6、下划线（用HTML的标签<code>&lt;u&gt;文字&lt;/u&gt;</code>）</h3><p><u>带下划线的文字</u></p>
-<h3 id="7、脚注-（格式-脚注内容-）"><a href="#7、脚注-（格式-脚注内容-）" class="headerlink" title="7、脚注 （格式 [^脚注内容]）"></a>7、脚注 （格式 [^脚注内容]）</h3><p>创建脚注格式类似这样 [^mark]。<br>[^mark]:这个是脚注里面的内容，会追加到最后  </p>
-<h3 id="8、列表"><a href="#8、列表" class="headerlink" title="8、列表"></a>8、列表</h3><ul>
-<li>无序列表 使用<code>* 、+ 、-</code> 后面加个空格</li>
-<li>有序列表 <code>数字</code>加<code>.</code>加空格  <ol>
-<li>第一个</li>
-<li>第二个  </li>
-</ol>
-</li>
-<li>列表嵌套（只需在子列表中的选项前面添加个四个空格即可）<br>比如有序嵌无序</li>
-</ul>
-<ol>
-<li>第一级<ol>
-<li>一级1<ol>
-<li>三级<ol>
-<li>四级，哦 一般就到三级，</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>一级2 </li>
-</ol>
-</li>
-<li>第二大级</li>
-</ol>
-<h3 id="9、区块（段落开头用-gt-后面紧跟一个空格）"><a href="#9、区块（段落开头用-gt-后面紧跟一个空格）" class="headerlink" title="9、区块（段落开头用&gt;, 后面紧跟一个空格）"></a>9、区块（段落开头用&gt;, 后面紧跟一个空格）</h3><blockquote>
-<p><code>&gt; </code>这是一块<br><code>&gt; </code>这个是第二块，换行是用双空格 + 回车的  </p>
-</blockquote>
-<ul>
-<li>区块也可以嵌套（多个&gt;&gt;）<blockquote>
-<p>最外层</p>
-<ol>
-<li>区块里面第一行</li>
-<li>区块里面第二行<blockquote>
-<p><code>&gt;&gt; </code>里面第一层</p>
-<blockquote>
-<p><code>&gt;&gt;&gt; </code>里面第二层   </p>
-</blockquote>
-</blockquote>
-</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h3 id="10、代码"><a href="#10、代码" class="headerlink" title="10、代码"></a>10、代码</h3><ol>
-<li>段落里的代码片段，可以用反``把它包起来  <blockquote>
-<p>比如<code>print()</code>函数</p>
-</blockquote>
-</li>
-<li>代码区块，用 <code>``` 代码 ```</code> 包起来 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function test () &#123;</span><br><span class="line">    return &#x27;markdown&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="11、链接"><a href="#11、链接" class="headerlink" title="11、链接"></a>11、链接</h3><ul>
-<li>普通链接 <code>[链接名称](链接地址) </code><br>比如，这是个<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmFpZHUuY29tLw==">链接<i class="fa fa-external-link-alt"></i></span> </li>
-<li>高级链接， 用变量作为网址<br>这是多次要使用的一个变量a, 没错就是<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmFpZHUuY29tLw==">变量<i class="fa fa-external-link-alt"></i></span>， 格式是<code>[变量][a]</code><br>这是多次要使用的一个变量b，是的就是<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmFpZHUuY29tLw==">变量<i class="fa fa-external-link-alt"></i></span>， 格式是<code>[变量][b]</code><br><code>[a]:https://www.baidu.com</code><br><code>[b]: https://www.baidu.com </code></li>
-</ul>
-<h3 id="12、图片"><a href="#12、图片" class="headerlink" title="12、图片"></a>12、图片</h3><blockquote>
-<p><code>![alt 属性文本](图片地址)</code><br><code>![alt 属性文本](图片地址 &quot;可选地址&quot;)</code></p>
-</blockquote>
-<ul>
-<li>开头一个感叹号</li>
-<li>接着一个方括号，里面放图片的替代文字</li>
-<li>接着一个普通括号，里面放图片网址，后面选填图片‘title’文字</li>
-</ul>
-<p><img src="http://static.runoob.com/images/runoob-logo.png" alt="图片1"></p>
-<h3 id="13、表格（｜分隔不同单元格，-分隔表头和其他行）"><a href="#13、表格（｜分隔不同单元格，-分隔表头和其他行）" class="headerlink" title="13、表格（｜分隔不同单元格，- 分隔表头和其他行）"></a>13、表格（｜分隔不同单元格，- 分隔表头和其他行）</h3><ul>
-<li>-: 右对齐</li>
-<li>:- 左对齐</li>
-<li>:-: 居中对齐<table>
-<thead>
-<tr>
-<th>name</th>
-<th>age</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>tom</td>
-<td>23</td>
-</tr>
-<tr>
-<td>jarry</td>
-<td>55</td>
-</tr>
-</tbody></table>
-<h3 id="14、支持的HTML标签"><a href="#14、支持的HTML标签" class="headerlink" title="14、支持的HTML标签"></a>14、支持的HTML标签</h3></li>
-<li><code>&lt;b&gt;&lt;i&gt;&lt;em&gt;&lt;br&gt;&lt;kbd&gt;&lt;sup&gt;&lt;sub&gt;</code></li>
-<li><code>&lt;b&gt;</code><b>粗</b> 类似 <code>_粗体_</code></li>
-<li><code>&lt;i&gt;、&lt;em&gt;</code><i>斜体</i> 类似 <code>_斜体_</code></li>
-<li><code>&lt;kbd&gt;</code>Ctrl</kbd> <kbd>shift</kbd></li>
-<li><code>&lt;sub&gt;</code> 你是我<sub>儿子</sub></li>
-<li><code>&lt;sup&gt;</code> 我是你<sup>爹</sup></li>
-</ul>
-<h3 id="15、特殊"><a href="#15、特殊" class="headerlink" title="15、特殊"></a>15、特殊</h3><blockquote>
-<ul>
-<li><strong>888</strong> 文本加粗用前后两个**  </li>
-<li>显示 ‘*’ 用转义符号, 正常的**</li>
-</ul>
-</blockquote>
-<h3 id="16、实操"><a href="#16、实操" class="headerlink" title="16、实操"></a>16、实操</h3><blockquote>
-<p>标题行的结尾使用 cammand + 回车 ，会使下一部分内容顶格显示</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-	
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1532,19 +1483,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1568,7 +1519,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hooks/" rel="tag">hooks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeScript/" rel="tag">typeScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%81%A5%E8%BA%AB/" rel="tag">健身</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8D%E8%AF%8D/" rel="tag">名词</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hooks/" rel="tag">hooks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeScript/" rel="tag">typeScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%81%A5%E8%BA%AB/" rel="tag">健身</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8D%E8%AF%8D/" rel="tag">名词</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>

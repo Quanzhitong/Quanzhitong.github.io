@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/xiu.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xiu.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xiu.png">
+  <link rel="mask-icon" href="/images/xiu.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一、前言  2022-3-29，react18正式发布。 新增了些非常实用的新特性，同时也没有额外的升级成本   二、新功能2.1 自动批量更新&amp;emsp;&amp;emsp; 在18之前，只支持 React 事件处理程序内的更新；现在支持 Promise、setTimeout、native event handlers 等，（个人理解：相当于把unstable_batchedUpdates 改为了默认行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React18, 终于来了">
+<meta property="og:url" content="http://example.com/2022/04/04/react18/index.html">
+<meta property="og:site_name" content="修远的个人博客">
+<meta property="og:description" content="一、前言  2022-3-29，react18正式发布。 新增了些非常实用的新特性，同时也没有额外的升级成本   二、新功能2.1 自动批量更新&amp;emsp;&amp;emsp; 在18之前，只支持 React 事件处理程序内的更新；现在支持 Promise、setTimeout、native event handlers 等，（个人理解：相当于把unstable_batchedUpdates 改为了默认行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/react18Compare.png">
+<meta property="og:image" content="http://example.com/images/startTransition.png">
+<meta property="og:image" content="http://example.com/images/react18.png">
+<meta property="article:published_time" content="2022-04-04T10:33:18.000Z">
+<meta property="article:modified_time" content="2022-04-04T14:16:54.699Z">
+<meta property="article:author" content="修远">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/react18Compare.png">
+
+<link rel="canonical" href="http://example.com/2022/04/04/react18/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>React18, 终于来了 | 修远的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <style>
+	  @font-face {
+		font-family: 'Against SVG';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Against SVG'), url('fonts/AgainstSVG.woff') format('woff');
+    }
+  </style>
+</head>
+
+
+<body itemscope >
+   
+
+	<div class="cover-wrapper" id="cover-wrapper">
+		<div class="logo"><img src="images/WechatIMG946.jpeg"/></div>
+		<h1 class="title" style="font-family:'Against SVG';font-weight:normal;font-size:42px" >Hi, friend，I'm XIUYUAN</h1>
+		<div class="nav">
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="#home" onclick="scorll(event)">HOME</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/interesting">INTERESTING</a></div>
+			<div style="font-family:'Against SVG';font-weight:normal;font-size:24px" ><a href="/about">ABOUT</a></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function scorll (event) {
+			var dom = document.getElementById('menu');
+  			dom.scrollIntoView({behavior: 'smooth', block: 'start'});
+		}
+		var dom = document.getElementById('cover-wrapper');
+		if(!(window.location.pathname === '/')) {
+			dom.style.display = 'none'
+		}
+	</script>
+ 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" integrity="sha256-gAw6iX1ivbkYgIvRfOXfTEm/w2DZLEB3W6RjSIEydio="
+    crossorigin="anonymous"></script>
+  	 <script type="text/javascript" src="js/digitalRain.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container" id='Home'>
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">修远的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">戒骄 戒躁</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-时光机">
+
+    <a href="/archives/" rel="section"><i class="fas fa-history fa-fw"></i>时光机</a>
+
+  </li>
+        <li class="menu-item menu-item-百宝箱">
+
+    <a href="/myPrecious/" rel="section"><i class="fas fa-toolbox fa-fw"></i>百宝箱</a>
+
+  </li>
+        <li class="menu-item menu-item-有趣知识">
+
+    <a href="/interesting/" rel="section"><i class="fas fa-ice-cream fa-fw"></i>有趣知识</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-读书">
+
+    <a href="/readBook/" rel="section"><i class="fas fa-book fa-fw"></i>读书</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-生活">
+
+    <a href="/life/" rel="section"><i class="fas fa-pizza-slice fa-fw"></i>生活</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F1YW56aGl0b25n" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/04/react18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="心有猛虎，细嗅蔷薇">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React18, 终于来了
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-04 18:33:18 / 修改时间：22:16:54" itemprop="dateCreated datePublished" datetime="2022-04-04T18:33:18+08:00">2022-04-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/react18/" itemprop="url" rel="index"><span itemprop="name">react18</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><blockquote>
+<ul>
+<li>2022-3-29，react18正式发布。</li>
+<li>新增了些非常实用的新特性，同时也没有额外的升级成本<img src="/images/react18Compare.png" width="100%" ></li>
+</ul>
+</blockquote>
+<h3 id="二、新功能"><a href="#二、新功能" class="headerlink" title="二、新功能"></a>二、新功能</h3><h4 id="2-1-自动批量更新"><a href="#2-1-自动批量更新" class="headerlink" title="2.1 自动批量更新"></a>2.1 自动批量更新</h4><p>&emsp;&emsp; 在18之前，只支持 React 事件处理程序内的更新；现在支持 Promise、setTimeout、native event handlers 等，（个人理解：相当于把unstable_batchedUpdates 改为了默认行为，再也不用到处unstable_batchedUpdates了），当然，如果不想自动批量更新，react还留了API，可以通过flushSync这个方法，单独去更新state。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Before: 仅仅 React events 会批量更新.</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  setCount(c =&gt; c + 1);</span><br><span class="line">  setFlag(f =&gt; !f);</span><br><span class="line">  // 这种情况下会导致渲染两次，因为更新了两次state，所以在异步的更新里我们通常会把多个state更新包在unstable_batchedUpdates里</span><br><span class="line">&#125;, 1000);</span><br><span class="line"></span><br><span class="line">// After: 在 timeouts, promises,native event handlers里都会批量更新</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  setCount(c =&gt; c + 1);</span><br><span class="line">  setFlag(f =&gt; !f);</span><br><span class="line">  // state合并更新，只渲染一次</span><br><span class="line">&#125;, 1000);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-过渡（Transitions）"><a href="#2-2-过渡（Transitions）" class="headerlink" title="2.2 过渡（Transitions）"></a>2.2 过渡（Transitions）</h4><p>   Transitions 是 介于紧急更新和非紧急更新中间的一个新概念。</p>
+<ul>
+<li>紧急更新：最直击的交互，点击按钮、输入内容等</li>
+<li>过渡 更新 ：从一个UI切换到另一个UI的中间态</li>
+</ul>
+<p>&emsp;&emsp;非hook环境下可以使用 React.startTransiton(scope)，scope 是一个回调函数，里面的更新任务都会被标记成过渡更新任务，过渡更新任务在渲染并发场景下，会被降级更新优先级，中断更新。<br><img src="/images/startTransition.png" width="100%" ></p>
+<p>&emsp;&emsp;可以看到，本身startTransiton的函数很简单，就是把任务做了个标记（改成了1），执行完任务之后，再把ReactCurrentBatchConfig 改回原来状态，而 ReactCurrentBatchConfig 更简单,只有三行代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* Keeps track of the current batch&#x27;s configuration such as how long an update</span><br><span class="line">* should suspend for if it needs to.</span><br><span class="line">*/</span><br><span class="line">const ReactCurrentBatchConfig = &#123;</span><br><span class="line">    transition: (0: number),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default ReactCurrentBatchConfig;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;以上只是标记过渡任务的源码，具体的并发方式下降低过渡更新任务优先级，以及多个任务权重计算机制，感兴趣的同学可自行研究</p>
+<h4 id="2-3-Suspense"><a href="#2-3-Suspense" class="headerlink" title="2.3 Suspense"></a>2.3 Suspense</h4><p>&emsp;&emsp;声明性地指定组件树中尚未准备好显示的部分的加载状态: &lt; Suspense callback={spin}&gt;。<br>&emsp;&emsp;Suspense在上个版本就可以和 React.lazy 结合使用做 code splitting，只不过当时在服务端不支持，react18之后，添加了对服务端的支持。Suspense 结合了 transition，如果 Transition 暂停，已可见的内容不会被 fallback 取代，而是会等有足够数据时才做延迟渲染。<br>   例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Suspense fallback=&#123;&lt;Spinner /&gt;&#125;&gt;</span><br><span class="line">    &lt;Comments /&gt;</span><br><span class="line">&lt;/Suspense&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-新的客户端-服务端渲染API"><a href="#2-4-新的客户端-服务端渲染API" class="headerlink" title="2.4 新的客户端/服务端渲染API"></a>2.4 新的客户端/服务端渲染API</h4><ul>
+<li> 从 react-dom/client 导出<blockquote>
+<p>createRoot 和 hydrateRoot 代替之前的 render 和 hydrate，render 和 hydrate 虽然能用，但会抛警告，并且不会具备并发功能</p>
+</blockquote>
+</li>
+<li>从 react-dom/server 导出<blockquote>
+<p>支持 streaming Suspense。API 包含 renderToPipeableStream 和 renderToReadableStream。</p>
+</blockquote>
+</li>
+<li>renderToString 继续工作，但不鼓励使用。</li>
+</ul>
+<h4 id="2-5-新的严格模式"><a href="#2-5-新的严格模式" class="headerlink" title="2.5 新的严格模式"></a>2.5 新的严格模式</h4><p>官网中说：</p>
+<blockquote>
+<p>在未来，我们希望添加一个特性，允许 React 添加和删除 UI 的部分，同时保留状态。例如，当用户选项卡远离屏幕并返回时，React 应该能够立即显示前一个屏幕。为此，React 将使用与前面相同的组件状态卸载和重新挂载树。 </p>
+</blockquote>
+<p>   翻译一下是这样的：</p>
+<blockquote>
+<p>&emsp; react 未来想要增加一种能力：组件卸载但却保留状态的能力（卸不干净），现在先发布了个严格模式的检查，这个模式一旦开启，会在开发环境模拟组件的挂载和卸载（以检查潜在的问题）。为什么要搞这个？举了个选项卡的例子，当用户切到选项卡之外的时候，就把组件“卸载”掉（状态没丢，只是DOM没了），再切回来的时候，数据还在, 虽然对于开发者它卸不干净，但是从用户的角度来看，它们呈现的效果是相同的。（目的就是体验更好）。<br>   &emsp; 目前如果要做到它上面说的这个卸载组件但保留状态的能力，八成得依赖外部的能力，比如redux或者浏览器缓存。 </p>
+</blockquote>
+<p>   <font color="#D23669">PS：</font>严格模式检查仅在开发模式下运行，不会影响生产构建。</p>
+<h3 id="三、新hook"><a href="#三、新hook" class="headerlink" title="三、新hook"></a>三、新hook</h3><h4 id="3-1-useId"><a href="#3-1-useId" class="headerlink" title="3.1 useId()"></a>3.1 useId()</h4><blockquote>
+<p>主要用于在客户机和服务器上生成唯一的 id，同时避免hydration不匹配。它主要用于组件库与需要唯一 id 的可访问性 api 集成。这解决了一个在 React 17及以下版本中已经存在的问题，但是在 React 18中这个问题更加重要，因为新的媒体伺服器渲染器是如何无序地传递 HTML 的。</p>
+</blockquote>
+<p>   解释一下：<br>   如果是CSR，这样渲染没什么问题。<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// App.tsx</span><br><span class="line"> const id = Math.random();</span><br><span class="line"> </span><br><span class="line"> export default function App() &#123;</span><br><span class="line">   return &lt;div id=&#123;id&#125;&gt;Hello&lt;/div&gt;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>   但如果应用是SSR，那么App.tsx会经历：  </p>
+<ol>
+<li>React在服务端渲染，生成随机id（假设为0.1234），这一步叫dehydrate（脱水）</li>
+<li><code>&lt;div id=&quot;0.12345&quot;&gt;Hello&lt;/div&gt;</code>作为HTML传递给客户端，作为首屏内容</li>
+<li>React在客户端渲染，生成随机id（假设为0.6789），这一步叫hydrate（注水）</li>
+</ol>
+<p>   就会出现客户端、服务端生成的id不匹配问题</p>
+<h4 id="3-2-useTransition"><a href="#3-2-useTransition" class="headerlink" title="3.2 useTransition()"></a>3.2 useTransition()</h4><p>   简单来说，这个hook相比startTransiton，可额外获取过渡期间的状态 isPending，可以在此时做些过渡优化，使用如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function App() &#123;</span><br><span class="line">    const [isPending, startTransition] = useTransition();</span><br><span class="line">    const [count, setCount] = useState(0);</span><br><span class="line"></span><br><span class="line">    function handleClick() &#123;</span><br><span class="line">        startTransition(() =&gt; &#123;</span><br><span class="line">        setCount(c =&gt; c + 1);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">        &#123;isPending &amp;&amp; &lt;Spinner /&gt;&#125;</span><br><span class="line">        &lt;button onClick=&#123;handleClick&#125;&gt;&#123;count&#125;&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PS：hook环境使用useTransition()，非hook环境使用React.startTransiton(scope)</p>
+</blockquote>
+<h4 id="3-3-useDeferredValue"><a href="#3-3-useDeferredValue" class="headerlink" title="3.3 useDeferredValue"></a>3.3 useDeferredValue</h4><p>&emsp;&emsp;非紧急部分的延迟渲染，这个hook类似于使用debouncing或throttling来延迟更新的用户空间hook。使用 useDeferredValue ，一旦其他工作结束，React 将立即更新(不会有任何时间的等待) ，并且和 startTransition 一样，延迟值可以暂停，等到数据足够的时候再延迟渲染，有点像debounce，但是相比于debounce有点优势——没有固定的延迟时间，所以不用手动指定延迟时间，而且不会阻塞用户输入。使用方法：<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const deferredValue = useDeferredValue(value);  </span><br></pre></td></tr></table></figure></p>
+<h4 id="3-4-两个外部库相关的hook"><a href="#3-4-两个外部库相关的hook" class="headerlink" title="3.4 两个外部库相关的hook"></a>3.4 两个外部库相关的hook</h4><ul>
+<li>useSyncExternalStore， 实现外部数据源的订阅时使用</li>
+<li>useInsertionEffect 允许 CSS-in-JS 库解决渲染中注入样式的性能问题。除非已经构建了一个 CSS-in-JS 库，否则我们不希望您使用它。</li>
+</ul>
+<h3 id="四、兼容性"><a href="#四、兼容性" class="headerlink" title="四、兼容性"></a>四、兼容性</h3><p>&emsp;&emsp;因为在 React 18中引入的新特性是使用现代浏览器的特性构建的，React 18 已经放弃对 IE 11 的支持，有兼容 IE 的需求需要继续使用 React 17。</p>
+<h3 id="五、如何升级"><a href="#五、如何升级" class="headerlink" title="五、如何升级"></a>五、如何升级</h3><ol>
+<li>更新 react、 react-dom 到18.0.0</li>
+<li>使用createRoot</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Before</span><br><span class="line">import &#123; render &#125; from &#x27;react-dom&#x27;;</span><br><span class="line">const container = document.getElementById(&#x27;app&#x27;);</span><br><span class="line">render(&lt;App tab=&quot;home&quot; /&gt;, container);</span><br><span class="line"></span><br><span class="line">// After</span><br><span class="line">import &#123; createRoot &#125; from &#x27;react-dom/client&#x27;;</span><br><span class="line">const container = document.getElementById(&#x27;app&#x27;);</span><br><span class="line">const root = createRoot(container);</span><br><span class="line">root.render(&lt;App tab=&quot;home&quot; /&gt;);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>考虑三方应用的支持     </li>
+</ol>
+<h3 id="六、一目了然"><a href="#六、一目了然" class="headerlink" title="六、一目了然"></a>六、一目了然</h3><img src="/images/react18.png" width="100%" >
+
+<p>参考文档：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdGpzLm9yZy9ibG9nLzIwMjIvMDMvMjkvcmVhY3QtdjE4Lmh0bWw=">官网<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj15dHVkSDhqZTVrbyZsaXN0PVBMTkdfMWozY1BDYVpaN2V0a3pXQTdKZmRtS1dUMHBNc2EmaW5kZXg9Mw==">视频演示<i class="fa fa-external-link-alt"></i></span>，可能听不懂，但一定能看懂</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDA0MTAyMDU2Ng==">某热心网友<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>码字不易，赏块大洋</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weixin.jpg" alt="修远 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react/" rel="tag"># react</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/20/jest/" rel="prev" title="jest基本使用">
+      <i class="fa fa-chevron-left"></i> jest基本使用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+	
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%96%B0%E5%8A%9F%E8%83%BD"><span class="nav-text">二、新功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E8%87%AA%E5%8A%A8%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0"><span class="nav-text">2.1 自动批量更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E8%BF%87%E6%B8%A1%EF%BC%88Transitions%EF%BC%89"><span class="nav-text">2.2 过渡（Transitions）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Suspense"><span class="nav-text">2.3 Suspense</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E6%96%B0%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93API"><span class="nav-text">2.4 新的客户端&#x2F;服务端渲染API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E6%96%B0%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-text">2.5 新的严格模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%96%B0hook"><span class="nav-text">三、新hook</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-useId"><span class="nav-text">3.1 useId()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-useTransition"><span class="nav-text">3.2 useTransition()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-useDeferredValue"><span class="nav-text">3.3 useDeferredValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E4%B8%A4%E4%B8%AA%E5%A4%96%E9%83%A8%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9A%84hook"><span class="nav-text">3.4 两个外部库相关的hook</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-text">四、兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%A6%82%E4%BD%95%E5%8D%87%E7%BA%A7"><span class="nav-text">五、如何升级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%80%E7%9B%AE%E4%BA%86%E7%84%B6"><span class="nav-text">六、一目了然</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="修远"
+      src="/images/WechatIMG946.jpeg">
+  <p class="site-author-name" itemprop="name">修远</p>
+  <div class="site-description" itemprop="description">心有猛虎，细嗅蔷薇</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F1YW56aGl0b25n" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Quanzhitong"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+
+
+      </div>
+
+	<!-- 标签云 
+		
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hooks/" rel="tag">hooks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typeScript/" rel="tag">typeScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%81%A5%E8%BA%AB/" rel="tag">健身</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8D%E8%AF%8D/" rel="tag">名词</a><span class="tag-list-count">1</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+		
+	 -->
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">修远</span>
+</div>
+
+<span id="timeDate" >载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("10/21/2021 12:34:56");//在此处修改你的建站时间，格式：月/日/年 时:分:秒
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "本站已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script async src="/js/clickFire.js"></script>
+
+  
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+   <script type="text/javascript" src="/js/snowClose.js"></script>
+   <!--浏览器搞笑标题-->
+   <script type="text/javascript" src="/js/funnyTitle.js"></script>
+</body>
+</html>
