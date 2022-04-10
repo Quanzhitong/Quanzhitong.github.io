@@ -238,10 +238,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-04 18:33:18 / 修改时间：22:16:54" itemprop="dateCreated datePublished" datetime="2022-04-04T18:33:18+08:00">2022-04-04</time>
+              <time title="创建时间：2022-04-04 18:33:18" itemprop="dateCreated datePublished" datetime="2022-04-04T18:33:18+08:00">2022-04-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-10 18:24:43" itemprop="dateModified" datetime="2022-04-10T18:24:43+08:00">2022-04-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -337,7 +343,13 @@
 <ol start="3">
 <li>考虑三方应用的支持     </li>
 </ol>
-<h3 id="六、一目了然"><a href="#六、一目了然" class="headerlink" title="六、一目了然"></a>六、一目了然</h3><img src="/images/react18.png" width="100%" >
+<h3 id="六、实战演练"><a href="#六、实战演练" class="headerlink" title="六、实战演练"></a>六、实战演练</h3><blockquote>
+<p>光说不练假把式，我们用代码体验尝尝鲜</p>
+</blockquote>
+<h4 id="6-1-react17-xx中的state更新-vs-18中的state更新"><a href="#6-1-react17-xx中的state更新-vs-18中的state更新" class="headerlink" title="6.1 react17.xx中的state更新 vs 18中的state更新"></a>6.1 <span class="exturl" data-url="aHR0cHM6Ly9jb2Rlc2FuZGJveC5pby9zL3JlYWN0LTE3LXh4LXkyMThocj9maWxlPS9zcmMvQXBwLmpz">react17.xx中的state更新<i class="fa fa-external-link-alt"></i></span> vs <span class="exturl" data-url="aHR0cHM6Ly9jb2Rlc2FuZGJveC5pby9zLzE4LWF1dG8tYmF0Y2gtdXBkYXRlLXc1Njk2cz9maWxlPS9zcmMvaW5kZXguanM=">18中的state更新<i class="fa fa-external-link-alt"></i></span></h4><h4 id="6-2-startTransition的使用"><a href="#6-2-startTransition的使用" class="headerlink" title="6.2 startTransition的使用"></a>6.2 <span class="exturl" data-url="aHR0cHM6Ly9jb2Rlc2FuZGJveC5pby9zL3ByaWNlbGVzcy1ub3ZhLTk2eXRjej9maWxlPS9zcmMvaW5kZXguanM=">startTransition的使用<i class="fa fa-external-link-alt"></i></span></h4><blockquote>
+<p>&emsp;&emsp;在上面这个例子里，有App1，和App2两个demo，App1渲染的时候没有“过渡”的概念，渲染任务不可中断，那对于两种state更新（更新用户输入、更新选中节点）不存在先后渲染，而是等到虚拟dom都准备好了的时候一起渲染，所以看到的现象是用户输入和显示内容一起渲染出来，感觉就是明显卡顿。而App2，同样是渲染了两千个节点，使用了startTransition处理页面更新的state，使其成为次优先级任务（过渡），用户输入不做处理（就是主优先级任务即需要紧急更新的state），然后在渲染的时候虽然列表渲染时间延后了，但是用户输入的体验明显更好了</p>
+</blockquote>
+<h4 id="6-3-suspend的使用，可以看这个视频代码演示，不做赘述"><a href="#6-3-suspend的使用，可以看这个视频代码演示，不做赘述" class="headerlink" title="6.3 suspend的使用，可以看这个视频代码演示，不做赘述"></a>6.3 suspend的使用，可以看<span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj15dHVkSDhqZTVrbyZsaXN0PVBMTkdfMWozY1BDYVpaN2V0a3pXQTdKZmRtS1dUMHBNc2EmaW5kZXg9Mw==">这个视频<i class="fa fa-external-link-alt"></i></span>代码演示，不做赘述</h4><h3 id="七、一目了然"><a href="#七、一目了然" class="headerlink" title="七、一目了然"></a>七、一目了然</h3><img src="/images/react18.png" width="100%" >
 
 <p>参考文档：</p>
 <ul>
@@ -1119,6 +1131,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
+      <meta itemprop="name" content="修远">
+      <meta itemprop="description" content="爱好的本质，是取悦自己">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="修远的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/31/interface/" class="post-title-link" itemprop="url">interface 和 type的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-31 18:58:47" itemprop="dateCreated datePublished" datetime="2021-10-31T18:58:47+08:00">2021-10-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-02 17:20:12" itemprop="dateModified" datetime="2022-01-02T17:20:12+08:00">2022-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/typeScript/" itemprop="url" rel="index"><span itemprop="name">typeScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>ts 的 interface 和 type总是容易混淆， 这里记一下区别。</p>
+</blockquote>
+<ol>
+<li>功能相同点：都可以描述对象或者函数</li>
+<li>功能不同点：  </li>
+</ol>
+<ul>
+<li>interface 特有的：  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interface 可以继承interface 或者 type， 使用extends关键字</span><br><span class="line">type 继承 type/interface 用 &amp;； 比如 D 继承C，相当于扩展，type D = C &amp; &#123;age: number&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type 特有的：</li>
+</ul>
+<pre><code class="text">1.type 可以声明基本类型别名 或 联合类型 或 元组等类型
+    type age = number //基本类型别名，
+    type  WW = X | O  // 联合类型         
+    type PersonList = [Man, Women] // 元组
+     (因为写法上 interface 是没有 ‘=’ 的嘛，所以定义上面这种就不方便)    
+2.type 语句中可以使用 typeof 获取实例的 类型进行赋值
+    let div = document.createElement(&#39;div&#39;);
+    type B = typeof div
+3、其他             
+    type click&lt;T&gt; = (data: T) =&gt; void;// 用泛型作为类型的入参，描述一个函数
+    const handleClickTest: click &lt;string&gt; = (data: string) =&gt; &#123;&#125;
+    type Foo&lt;T&gt; = [T, T];  // 用泛型作为类型入参，描述一个只有两个元素的数组
+    type Tree&lt;T&gt; = T | &#123; a: Tree&lt;T&gt;, b: Tree&lt;T&gt; &#125;;
+    type StringOrNum = string | number;  
+    type StringOrObj = string | &#123; name: string &#125;;  
+    type Dictionaries = Dictionary&lt;string, Books&gt;;
+</code></pre>
+<ol start="3">
+<li>写法上的注意点<ul>
+<li>type定义 用 = 号。</li>
+<li>interface 可以 点的出来，也就是必须照着它描述的样子写函数</li>
+<li>函数的描述在名字后面用 ：， 可以使用type 或 interface；</li>
+<li>箭头函数返回值的描述， 在箭头函数的() 后面</li>
+<li>type 和 interface 可以交叉继承</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+	
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/heath/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1282,121 +1409,6 @@
 <h3 id="4、说人话，讲道理"><a href="#4、说人话，讲道理" class="headerlink" title="4、说人话，讲道理"></a>4、说人话，讲道理</h3><blockquote>
 <p><code>事实</code> 人不是机器，我们普通人也没专业的教练和仪器来精准控制营养摄入，所以建议是增肌的时候，多吃蛋白和碳水，这样事实上肌肉和脂肪同时会长，尤其是肚子，容易长肉还不容易下去，但是后期可以专门刷脂刷下去<br><code>误区一</code>：多吃蛋白，不是只吃蛋白，肌肉的合成过程是肌纤维撕裂再生长，肌纤维合成需要的原料是蛋白质，但主要燃料是碳水，如果碳水不够，就会动力不足，导致肌肉增长缓慢<br><code>误区二</code>：如果家里没矿，吃鸡蛋真的没必要扔蛋黄，如果不是三高人员，一般没事的，鸡蛋里的胆固醇和血清胆固醇是两码事，普通人吃一两三个蛋黄长上去的血清胆固醇微乎其微<br><code>误区N</code>：后面再说</p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-	
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/WechatIMG946.jpeg">
-      <meta itemprop="name" content="修远">
-      <meta itemprop="description" content="爱好的本质，是取悦自己">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="修远的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/31/interface/" class="post-title-link" itemprop="url">interface 和 type的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-31 18:58:47" itemprop="dateCreated datePublished" datetime="2021-10-31T18:58:47+08:00">2021-10-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-02 17:20:12" itemprop="dateModified" datetime="2022-01-02T17:20:12+08:00">2022-01-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/typeScript/" itemprop="url" rel="index"><span itemprop="name">typeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>ts 的 interface 和 type总是容易混淆， 这里记一下区别。</p>
-</blockquote>
-<ol>
-<li>功能相同点：都可以描述对象或者函数</li>
-<li>功能不同点：  </li>
-</ol>
-<ul>
-<li>interface 特有的：  </li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interface 可以继承interface 或者 type， 使用extends关键字</span><br><span class="line">type 继承 type/interface 用 &amp;； 比如 D 继承C，相当于扩展，type D = C &amp; &#123;age: number&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>type 特有的：</li>
-</ul>
-<pre><code class="text">1.type 可以声明基本类型别名 或 联合类型 或 元组等类型
-    type age = number //基本类型别名，
-    type  WW = X | O  // 联合类型         
-    type PersonList = [Man, Women] // 元组
-     (因为写法上 interface 是没有 ‘=’ 的嘛，所以定义上面这种就不方便)    
-2.type 语句中可以使用 typeof 获取实例的 类型进行赋值
-    let div = document.createElement(&#39;div&#39;);
-    type B = typeof div
-3、其他             
-    type click&lt;T&gt; = (data: T) =&gt; void;// 用泛型作为类型的入参，描述一个函数
-    const handleClickTest: click &lt;string&gt; = (data: string) =&gt; &#123;&#125;
-    type Foo&lt;T&gt; = [T, T];  // 用泛型作为类型入参，描述一个只有两个元素的数组
-    type Tree&lt;T&gt; = T | &#123; a: Tree&lt;T&gt;, b: Tree&lt;T&gt; &#125;;
-    type StringOrNum = string | number;  
-    type StringOrObj = string | &#123; name: string &#125;;  
-    type Dictionaries = Dictionary&lt;string, Books&gt;;
-</code></pre>
-<ol start="3">
-<li>写法上的注意点<ul>
-<li>type定义 用 = 号。</li>
-<li>interface 可以 点的出来，也就是必须照着它描述的样子写函数</li>
-<li>函数的描述在名字后面用 ：， 可以使用type 或 interface；</li>
-<li>箭头函数返回值的描述， 在箭头函数的() 后面</li>
-<li>type 和 interface 可以交叉继承</li>
-</ul>
-</li>
-</ol>
 
       
     </div>
