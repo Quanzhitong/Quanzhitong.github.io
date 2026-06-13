@@ -1,0 +1,22 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import DigitalRain from '../components/DigitalRain/DigitalRain.astro';
+import Cover from '../components/Cover.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{SITE_TITLE}</title>
+    <meta name="description" content={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <DigitalRain containerId="digital-rain" />
+    <Cover
+      title="XIUYUAN"
+      subtitle="日薅一毛无有尽，待到功成烤全羊"
+    />
+  </body>
+</html>

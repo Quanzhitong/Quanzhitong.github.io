@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <div class="page-content">
+    <h1>关于</h1>
+    <div class="about-content">
+      <p>爱好的本质，是取悦自己。</p>
+      <p>这是一个个人博客，用于记录学习、工作和生活的点滴。</p>
+      <h2>技术栈</h2>
+      <ul>
+        <li>前端开发（React、Vue、Node.js）</li>
+        <li>工程化（Webpack、Vite）</li>
+        <li>自动化测试（Jest）</li>
+      </ul>
+      <h2>联系方式</h2>
+      <p>
+        GitHub: <a href="https://github.com/Quanzhitong" target="_blank">@Quanzhitong</a>
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .about-content {
+    margin-top: 2rem;
+  }
+
+  .about-content p {
+    color: #666;
+  }
+
+  .about-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .about-content ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+  }
+</style>

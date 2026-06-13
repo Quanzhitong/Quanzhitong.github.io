@@ -1,0 +1,116 @@
+---
+import { NAV_ITEMS } from '../consts';
+
+interface Props {
+  title: string;
+  subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div class="cover-wrapper">
+  <div class="cover-content">
+    <h1 class="cover-title">Hi, friend, I'm <span class="highlight">XIUYUAN</span></h1>
+    <div class="cover-subtitle-wrapper">
+      <p class="cover-subtitle">{subtitle}</p>
+    </div>
+    <nav class="cover-nav">
+      <a href="/" class="nav-link">HOME</a>
+      <a href="/interesting" class="nav-link">INTERESTING</a>
+      <a href="/about" class="nav-link">ABOUT</a>
+    </nav>
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+  .cover-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(78, 239, 255, 0.62), rgba(120, 100, 255, 0.58));
+    padding: 2rem;
+  }
+
+  .cover-content {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 4rem 5rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 90vw;
+  }
+
+  .cover-title {
+    font-family: 'AgainstSVG', 'Lato', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight {
+    font-weight: 700;
+  }
+
+  .cover-subtitle-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .cover-subtitle {
+    font-size: 1.25rem;
+    color: #666;
+    margin: 0;
+  }
+
+  .cover-nav {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover {
+    background: rgba(78, 239, 255, 0.62);
+    border-color: rgba(78, 239, 255, 0.62);
+    color: #fff;
+  }
+
+  @media (max-width: 767px) {
+    .cover-content {
+      padding: 2rem;
+    }
+
+    .cover-title {
+      font-size: 1.75rem;
+    }
+
+    .cover-subtitle {
+      font-size: 1rem;
+    }
+
+    .cover-nav {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 413px) {
+    .cover-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

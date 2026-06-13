@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <div class="page-content">
+    <h1>时光机</h1>
+    <p class="intro">按时间线整理的文章归档。</p>
+    <div class="empty-state">
+      <p>文章内容迁移后将在此处显示。</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .intro {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .empty-state p {
+    color: #999;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+interface Props {
+  clientId: string;
+  clientSecret: string;
+  repo: string;
+  owner: string;
+}
+
+const { clientId, clientSecret, repo, owner } = Astro.props;
+---
+
+<div class="gitalk-container">
+  <div id="gitalk-container"></div>
+</div>
+
+<script
+  is:inline
+  define:vars={{
+    clientId,
+    clientSecret,
+    repo,
+    owner,
+  }}
+>
+  // Load Gitalk SDK
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css';
+  document.head.appendChild(link);
+
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js';
+  script.onload = () => {
+    const container = document.getElementById('gitalk-container');
+    if (!container) return;
+
+    const gitalk = new window.Gitalk({
+      clientID: clientId,
+      clientSecret: clientSecret,
+      repo: repo,
+      owner: owner,
+      repo: repo,
+      githubID: owner,
+      id: location.pathname,
+      distractionFreeMode: false,
+    });
+    gitalk.render('gitalk-container');
+  };
+  document.head.appendChild(script);
+</script>
+
+<style>
+  .gitalk-container {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e9ecef;
+  }
+</style>
