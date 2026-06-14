@@ -1,38 +1,58 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { allCategories, getPostsByCategory } from '../data/legacyPosts';
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <div class="page-content">
-    <h1>分类</h1>
-    <p class="intro">按主题整理的文章列表。</p>
-    <div class="empty-state">
-      <p>文章内容迁移后将在此处显示。</p>
+<BaseLayout title={`分类 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="section-kicker">Categories</p>
+      <h1>文章分类</h1>
+      <p>从旧站恢复出的主题索引。先解决可发现性，再做内容清洗。</p>
     </div>
-  </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="category-grid">
+        {allCategories.map((category) => {
+          const count = getPostsByCategory(category).length;
+          return (
+            <a class="category-card" href={`#${encodeURIComponent(category)}`}>
+              <strong>{category}</strong>
+              <span>{count} 篇文章</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="timeline">
+        {allCategories.map((category) => {
+          const posts = getPostsByCategory(category);
+          return (
+            <div id={category} class="year-group">
+              <div class="year-label">{category}</div>
+              <div class="timeline-list">
+                {posts.map((post) => (
+                  <a class="timeline-item" href={post.href}>
+                    <time class="timeline-date" datetime={post.date}>{post.date}</time>
+                    <span>
+                      <strong>{post.title}</strong>
+                      <br />
+                      <span>{post.description}</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
 </BaseLayout>
-
-<style>
-  .page-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .intro {
-    color: #666;
-    margin-bottom: 2rem;
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-
-  .empty-state p {
-    color: #999;
-    margin: 0;
-  }
-</style>

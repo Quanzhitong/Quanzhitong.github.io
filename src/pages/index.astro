@@ -1,22 +1,102 @@
 ---
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import DigitalRain from '../components/DigitalRain/DigitalRain.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import Cover from '../components/Cover.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { allCategories, featuredPosts, postsByDate } from '../data/legacyPosts';
+
+const latestPosts = postsByDate.slice(0, 6);
+const categoryHighlights = allCategories
+  .map((category) => ({
+    name: category,
+    count: postsByDate.filter((post) => post.categories.includes(category)).length,
+  }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 8);
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{SITE_TITLE}</title>
-    <meta name="description" content={SITE_DESCRIPTION} />
-  </head>
-  <body>
-    <DigitalRain containerId="digital-rain" />
-    <Cover
-      title="XIUYUAN"
-      subtitle="日薅一毛无有尽，待到功成烤全羊"
-    />
-  </body>
-</html>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <Cover
+    postCount={postsByDate.length}
+    categoryCount={allCategories.length}
+    latestTitle={latestPosts[0].title}
+    latestHref={latestPosts[0].href}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">Featured</p>
+          <h2 class="section-title">近期值得重看的记录</h2>
+        </div>
+        <a class="button" href="/archives">全部文章</a>
+      </div>
+      <div class="post-grid">
+        {featuredPosts.map((post, index) => (
+          <a href={post.href} class:list={['post-card', { featured: index === 0 }]}>
+            <div>
+              <div class="post-meta">
+                <time datetime={post.date}>{post.date}</time>
+                <span class="post-chip">{post.categories[0]}</span>
+              </div>
+              <h3 class="post-title">{post.title}</h3>
+              <p class="post-desc">{post.description}</p>
+            </div>
+            <span class="post-link">阅读旧文</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-panel">
+      <div>
+        <p class="section-kicker">Archive</p>
+        <h2>不是模板站，是可继续生长的个人知识库。</h2>
+        <p class="section-copy">
+          这次迁移先把旧站文章重新接入 Astro 信息架构，保留真实内容和访问路径，再逐步把历史文章清洗成 Markdown/MDX。
+        </p>
+        <div class="button-row">
+          <a class="button primary" href="/categories">查看分类</a>
+          <a class="button" href="/blog">文章列表</a>
+        </div>
+      </div>
+      <div class="category-grid">
+        {categoryHighlights.map((category) => (
+          <a class="category-card" href={`/categories#${encodeURIComponent(category.name)}`}>
+            <strong>{category.name}</strong>
+            <span>{category.count} 篇文章</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">Latest</p>
+          <h2 class="section-title">时间线</h2>
+        </div>
+        <p class="section-copy">保留旧站路径，先恢复浏览体验，再逐篇做内容升级。</p>
+      </div>
+      <div class="post-grid">
+        {latestPosts.map((post) => (
+          <a href={post.href} class="post-card">
+            <div>
+              <div class="post-meta">
+                <time datetime={post.date}>{post.date}</time>
+                <span class="post-chip">{post.categories[0]}</span>
+              </div>
+              <h3 class="post-title">{post.title}</h3>
+              <p class="post-desc">{post.description}</p>
+            </div>
+            <span class="post-link">打开文章</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

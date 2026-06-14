@@ -2,142 +2,55 @@
 import { NAV_ITEMS } from '../consts';
 
 const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
 ---
 
 <header class="site-header">
-  <div class="header-container">
-    <a href="/" class="site-title">修远的个人博客</a>
-    <button class="menu-toggle" aria-label="Toggle menu">
-      <span class="menu-icon"></span>
-    </button>
-    <nav class="main-nav">
-      <ul class="nav-list">
-        {NAV_ITEMS.map((item) => (
-          <li class="nav-item">
-            <a
-              href={item.href}
-              class:list={['nav-link', { active: currentPath === item.href }]}
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
+  <div class="container nav-shell">
+    <a href="/" class="brand" aria-label="回到首页">
+      <span class="brand-mark">修</span>
+      <span>修远的个人博客</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      {NAV_ITEMS.map((item) => (
+        <a href={item.href} class:list={['nav-link', { active: isActive(item.href) }]}>
+          {item.name}
+        </a>
+      ))}
     </nav>
+    <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
 
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-  }
-
-  .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .site-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #333;
-    text-decoration: none;
-  }
-
-  .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-
-  .menu-icon {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: #333;
-    position: relative;
-  }
-
-  .menu-icon::before,
-  .menu-icon::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 2px;
-    background: #333;
-    left: 0;
-  }
-
-  .menu-icon::before {
-    top: -8px;
-  }
-
-  .menu-icon::after {
-    top: 8px;
-  }
-
-  .nav-list {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .nav-link {
-    color: #666;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.3s ease;
-  }
-
-  .nav-link:hover,
-  .nav-link.active {
-    color: #4eafff;
-  }
-
-  @media (max-width: 991px) {
-    .menu-toggle {
-      display: block;
-    }
-
-    .main-nav {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .main-nav.open {
-      display: block;
-    }
-
-    .nav-list {
-      flex-direction: column;
-      padding: 1rem 2rem;
-      gap: 1rem;
-    }
-  }
-</style>
-
 <script>
-  const menuToggle = document.querySelector('.menu-toggle');
-  const mainNav = document.querySelector('.main-nav');
+  const menuButton = document.querySelector<HTMLButtonElement>('.menu-button');
+  const navLinks = document.querySelector<HTMLElement>('.nav-links');
 
-  menuToggle?.addEventListener('click', () => {
-    mainNav?.classList.toggle('open');
+  function closeMenu() {
+    navLinks?.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    menuButton?.setAttribute('aria-expanded', 'false');
+  }
+
+  menuButton?.addEventListener('click', () => {
+    const isOpen = navLinks?.classList.toggle('open') ?? false;
+    document.body.classList.toggle('menu-open', isOpen);
+    menuButton.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  navLinks?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
   });
 </script>

@@ -6,9 +6,10 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description: string;
+  hideNav?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, hideNav = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,7 +18,7 @@ const { title, description } = Astro.props;
     <BaseHead title={title} description={description} />
   </head>
   <body>
-    <Navigation />
+    {!hideNav && <Navigation />}
     <main>
       <slot />
     </main>

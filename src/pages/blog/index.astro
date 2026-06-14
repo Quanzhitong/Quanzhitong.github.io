@@ -1,114 +1,110 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+import { allCategories, postsByDate } from '../../data/legacyPosts';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout title={`文章 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="section-kicker">Posts</p>
+      <h1>文章</h1>
+      <p>这里先收拢旧站文章入口。旧文保持原地址可访问，新文章后续会直接进入 Astro 内容系统。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="archive-toolbar" data-post-filter>
+        <label class="search-field">
+          <span class="sr-only">搜索文章</span>
+          <input type="search" placeholder="搜索标题、分类、标签" data-search-input />
+        </label>
+        <div class="filter-row" aria-label="按分类筛选">
+          <button class="filter-chip active" type="button" data-filter-category="all" aria-pressed="true">全部</button>
+          {allCategories.slice(0, 10).map((category) => (
+            <button class="filter-chip" type="button" data-filter-category={category} aria-pressed="false">
+              {category}
+            </button>
+          ))}
+        </div>
+        <p class="result-count" data-result-count>{postsByDate.length} 篇文章</p>
+      </div>
+
+      <div class="post-grid" data-post-grid>
+        {postsByDate.map((post, index) => (
+          <a
+            href={post.href}
+            class:list={['post-card', { featured: index === 0 }]}
+            data-post-card
+            data-title={post.title}
+            data-categories={post.categories.join(' ')}
+            data-tags={post.tags.join(' ')}
+          >
+            <div>
+              <div class="post-meta">
+                <time datetime={post.date}>{post.date}</time>
+                <span class="post-chip">{post.categories[0]}</span>
+              </div>
+              <h2 class="post-title">{post.title}</h2>
+              <p class="post-desc">{post.description}</p>
+            </div>
+            <span class="post-link">打开文章</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="empty-state" data-empty-state hidden>
+        <strong>没有匹配文章</strong>
+        <p>换一个关键词或分类再试。</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const toolbar = document.querySelector<HTMLElement>('[data-post-filter]');
+  const input = toolbar?.querySelector<HTMLInputElement>('[data-search-input]');
+  const chips = Array.from(toolbar?.querySelectorAll<HTMLButtonElement>('[data-filter-category]') ?? []);
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-post-card]'));
+  const resultCount = toolbar?.querySelector<HTMLElement>('[data-result-count]');
+  const emptyState = document.querySelector<HTMLElement>('[data-empty-state]');
+  let activeCategory = 'all';
+
+  function applyFilter() {
+    const keyword = input?.value.trim().toLowerCase() ?? '';
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const searchable = [
+        card.dataset.title,
+        card.dataset.categories,
+        card.dataset.tags,
+      ].join(' ').toLowerCase();
+      const categories = card.dataset.categories?.split(' ') ?? [];
+      const matchesKeyword = !keyword || searchable.includes(keyword);
+      const matchesCategory = activeCategory === 'all' || categories.includes(activeCategory);
+      const isVisible = matchesKeyword && matchesCategory;
+
+      card.classList.toggle('is-hidden', !isVisible);
+      if (isVisible) visibleCount += 1;
+    });
+
+    if (resultCount) resultCount.textContent = `${visibleCount} 篇文章`;
+    if (emptyState) emptyState.hidden = visibleCount > 0;
+  }
+
+  input?.addEventListener('input', applyFilter);
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      activeCategory = chip.dataset.filterCategory ?? 'all';
+      chips.forEach((item) => {
+        const isActive = item === chip;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
+      });
+      applyFilter();
+    });
+  });
+</script>

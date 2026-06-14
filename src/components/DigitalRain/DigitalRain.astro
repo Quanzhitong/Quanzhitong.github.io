@@ -1,6 +1,4 @@
 ---
-import { onMount } from 'astro';
-
 interface Props {
   containerId: string;
 }
@@ -8,131 +6,134 @@ interface Props {
 const { containerId } = Astro.props;
 ---
 
-<div id={containerId} class="digital-rain-container"></div>
+<div id={containerId} class="digital-rain-container" data-digital-rain></div>
 
-<script is:inline define:vars={{ containerId }}>
-  // We need to dynamically import p5 to avoid SSR issues
-  async function initP5() {
-    const p5Module = await import('p5');
-    const p5 = p5Module.default;
+<script>
+  const containers = document.querySelectorAll('[data-digital-rain]');
 
-    let streams = null;
-    let p5Instance = null;
+  containers.forEach((container) => {
+    if (!(container instanceof HTMLElement)) return;
 
-    function randomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) return;
 
-    function charIndex(arr) {
-      return Math.floor(Math.random() * arr.length);
-    }
+    container.appendChild(canvas);
 
-    class Symbol {
-      constructor(options) {
-        this.x = options.x;
-        this.y = options.y;
-        this.speed = options.speed;
-        this.changeRate = options.changeRate;
-        this.colour = options.colour;
-        this.yThreshold = height + textSize();
-      }
+    const chars = '嗡嘛呢呗咪吽';
+    const fontSize = 22;
+    const columnGap = 34;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let columns = 0;
+    let streams = [];
+    let animationFrame = 0;
+    let previousTime = 0;
+    let lastDrawTime = 0;
 
-      draw() {
-        if (frameCount % this.changeRate === 0 || !this.character) {
-          const mingPin = [0x5ba2, 0x6237, 0x81f3, 0x4e0a, 0x8bda, 0x4fe1, 0x8d1f, 0x8d23, 0x0020, 0x8d64, 0x5154, 0x540d, 0x54c1, 0x0020, 0x8ffd, 0x6c42, 0x5353, 0x8d8a];
-          this.character = String.fromCharCode(mingPin[charIndex(mingPin)]);
-        }
-        this.y = this.y > this.yThreshold ? 0 : this.y + this.speed;
-        fill(this.colour);
-        text(this.character, this.x, this.y);
-      }
-    }
+    const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
 
-    class Stream {
-      constructor(options) {
-        const { x, y, speed, length } = options;
-        this.symbols = [];
-        for (let i = 0; i < length; i += 1) {
-          const baseLightness = (1 - (i / length));
-          const lightnessMultiplier = (i < 3) ? (100 - (i * 5)) : 50;
-          const symbol = new Symbol({
-            x,
-            y: y - (textSize() * i),
-            speed,
-            changeRate: randomInt(100, 400),
-            colour: [120, 100, baseLightness * lightnessMultiplier],
-          });
-          this.symbols.push(symbol);
-        }
-      }
+    const createStream = (height) => {
+      const length = 8 + Math.floor(Math.random() * 12);
 
-      draw() {
-        this.symbols.forEach((symbol) => symbol.draw());
-      }
-    }
-
-    class Streams {
-      constructor() {
-        this.streams = [];
-        for (let i = 0; i < window.innerWidth / textSize(); i += 1) {
-          const stream = new Stream({
-            x: i * textSize(),
-            y: randomInt(-1000, 0),
-            speed: randomInt(1, 3),
-            length: randomInt(1, window.innerHeight / 2 / textSize()),
-          });
-          this.streams.push(stream);
-        }
-      }
-
-      draw() {
-        this.streams.forEach((stream) => stream.draw());
-      }
-    }
-
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    p5Instance = new p5((p) => {
-      p.setup = () => {
-        const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-        canvas.parent(container);
-        p.textFont('monospace', 12);
-        p.colorMode(p.HSL);
-        streams = new Streams();
+      return {
+        y: Math.random() * -height,
+        speed: 46 + Math.random() * 34,
+        length,
+        symbols: Array.from({ length }, randomChar),
+        nextChange: 120 + Math.random() * 260,
       };
-
-      p.draw = () => {
-        p.background(0, 0, 0, 0.6);
-        if (streams) {
-          streams.draw();
-        }
-      };
-
-      p.windowResized = () => {
-        p.resizeCanvas(p.windowWidth, p.windowHeight);
-        streams = new Streams();
-      };
-    });
-
-    return () => {
-      if (p5Instance) {
-        p5Instance.remove();
-      }
     };
-  }
 
-  initP5();
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      columns = Math.ceil(rect.width / columnGap);
+      streams = Array.from({ length: columns }, () => createStream(rect.height || 360));
+    };
+
+    const draw = (time = 0) => {
+      if (!reduceMotion && time - lastDrawTime < 24) {
+        animationFrame = window.requestAnimationFrame(draw);
+        return;
+      }
+
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const delta = previousTime ? Math.min(time - previousTime, 48) : 16;
+      previousTime = time;
+      lastDrawTime = time;
+
+      context.fillStyle = 'rgba(0, 0, 0, 0.42)';
+      context.fillRect(0, 0, width, height);
+      context.font = `600 ${fontSize}px "PingFang SC", "Microsoft YaHei", sans-serif`;
+      context.textBaseline = 'top';
+
+      streams.forEach((stream, index) => {
+        const x = index * columnGap;
+        const y = Math.round(stream.y);
+
+        stream.nextChange -= delta;
+        if (stream.nextChange <= 0) {
+          stream.symbols = stream.symbols.map((symbol) => (Math.random() > 0.72 ? randomChar() : symbol));
+          stream.nextChange = 120 + Math.random() * 300;
+        }
+
+        stream.symbols.forEach((symbol, symbolIndex) => {
+          const symbolY = y - symbolIndex * fontSize;
+          if (symbolY < -fontSize || symbolY > height + fontSize) return;
+
+          const baseLightness = 1 - symbolIndex / stream.length;
+          const lightnessMultiplier = symbolIndex < 3 ? 100 - symbolIndex * 5 : 50;
+          const lightness = Math.max(10, baseLightness * lightnessMultiplier);
+          context.fillStyle = `hsl(120 100% ${lightness}%)`;
+          context.fillText(symbol, x, symbolY);
+        });
+
+        stream.y += stream.speed * (delta / 1000);
+        if (stream.y - stream.length * fontSize > height + fontSize) {
+          streams[index] = createStream(height);
+          streams[index].y = -fontSize * (1 + Math.random() * 16);
+        } else {
+          streams[index] = stream;
+        }
+      });
+
+      if (reduceMotion) return;
+      animationFrame = window.requestAnimationFrame(draw);
+    };
+
+    resize();
+    draw();
+
+    const observer = new ResizeObserver(resize);
+    observer.observe(container);
+
+    window.addEventListener('beforeunload', () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(animationFrame);
+    });
+  });
 </script>
 
 <style>
   .digital-rain-container {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
     pointer-events: none;
+  }
+
+  .digital-rain-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>

@@ -1,38 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getPostsBySection } from '../data/legacyPosts';
+
+const posts = getPostsBySection('reading');
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <div class="page-content">
-    <h1>读书</h1>
-    <p class="intro">读书笔记和书籍推荐。</p>
-    <div class="empty-state">
-      <p>文章内容迁移后将在此处显示。</p>
+<BaseLayout title={`读书 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="section-kicker">Reading</p>
+      <h1>读书</h1>
+      <p>读书笔记和人物传记阅读记录。先恢复旧站入口，再逐步整理成更适合阅读的长文版式。</p>
     </div>
-  </div>
+  </section>
+
+  <section class="section">
+    <div class="container post-grid">
+      {posts.map((post) => (
+        <a href={post.href} class="post-card">
+          <div>
+            <div class="post-meta">
+              <time datetime={post.date}>{post.date}</time>
+              <span class="post-chip">{post.categories[0]}</span>
+            </div>
+            <h2 class="post-title">{post.title}</h2>
+            <p class="post-desc">{post.description}</p>
+          </div>
+          <span class="post-link">打开笔记</span>
+        </a>
+      ))}
+    </div>
+  </section>
 </BaseLayout>
-
-<style>
-  .page-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .intro {
-    color: #666;
-    margin-bottom: 2rem;
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-
-  .empty-state p {
-    color: #999;
-    margin: 0;
-  }
-</style>

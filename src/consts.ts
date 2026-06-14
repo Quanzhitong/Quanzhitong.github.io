@@ -4,6 +4,7 @@
 export const SITE_TITLE = '修远的个人博客';
 export const SITE_DESCRIPTION = '爱好的本质，是取悦自己';
 export const NAV_ITEMS = [
+	{ name: '文章', href: '/blog' },
 	{ name: '分类', href: '/categories' },
 	{ name: '时光机', href: '/archives' },
 	{ name: '百宝箱', href: '/myPrecious' },
