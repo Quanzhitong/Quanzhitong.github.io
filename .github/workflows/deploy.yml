@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build Astro site
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -23,8 +23,3 @@ jobs:
         env:
           GITALK_CLIENT_ID: ${{ secrets.GITALK_CLIENT_ID }}
           GITALK_CLIENT_SECRET: ${{ secrets.GITALK_CLIENT_SECRET }}
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: master
