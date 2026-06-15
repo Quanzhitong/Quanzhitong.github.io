@@ -679,7 +679,7 @@ main {
 }
 
 .article-shell {
-  width: min(820px, calc(100% - 40px));
+  width: min(860px, calc(100% - 40px));
   margin: 0 auto;
   padding: 64px 0;
 }
@@ -688,8 +688,203 @@ main {
   font-size: clamp(2rem, 5vw, 4rem);
 }
 
-.article-shell :where(p, li) {
+.article-header {
+  margin-bottom: 42px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 28px;
+}
+
+.article-header h1 {
+  margin-bottom: 18px;
+}
+
+.article-header p {
+  max-width: 720px;
+  font-size: 1.08rem;
+}
+
+.article-back {
+  display: inline-flex;
+  margin-bottom: 22px;
+  color: var(--accent-strong);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.article-body {
   color: #3f4942;
+  font-size: 1.03rem;
+}
+
+.article-body :where(p, li) {
+  color: #3f4942;
+}
+
+.article-body :where(h2, h3, h4) {
+  margin-top: 2.2em;
+  margin-bottom: 0.8em;
+  scroll-margin-top: 96px;
+}
+
+.article-body h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.article-body h3 {
+  font-size: clamp(1.32rem, 2.2vw, 1.7rem);
+}
+
+.article-body h4 {
+  font-size: 1.12rem;
+}
+
+.article-body a {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 127, 104, 0.28);
+  text-underline-offset: 4px;
+}
+
+.article-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 24px auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.article-body blockquote {
+  margin: 28px 0;
+  border-left: 4px solid var(--accent);
+  padding: 14px 18px;
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.article-body :where(code, pre) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.article-body :not(pre) > code {
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  background: rgba(0, 127, 104, 0.1);
+  color: var(--accent-strong);
+  font-size: 0.92em;
+}
+
+.article-body pre {
+  overflow-x: auto;
+  margin: 0;
+  padding: 16px 18px;
+}
+
+.article-body figure.highlight,
+.article-body > pre {
+  border: 1px solid #20312b;
+  border-radius: var(--radius);
+  background: #0d1411;
+  color: #e8f3ee;
+}
+
+.article-body figure.highlight {
+  overflow-x: auto;
+  margin: 26px 0;
+}
+
+.article-body figure.highlight table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+.article-body figure.highlight td {
+  padding: 0;
+  vertical-align: top;
+}
+
+.article-body figure.highlight .gutter {
+  width: 54px;
+  user-select: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(232, 243, 238, 0.42);
+  text-align: right;
+}
+
+.article-body figure.highlight .code {
+  color: #e8f3ee;
+}
+
+.article-body figure.highlight .line {
+  min-height: 1.55em;
+}
+
+.article-body > table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.article-body > table :where(th, td) {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+}
+
+.article-footer {
+  margin-top: 54px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.article-tags span {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: var(--surface-soft);
+  color: var(--accent-strong);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.article-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.article-nav a {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: var(--surface);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.article-nav a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 127, 104, 0.35);
+  box-shadow: 0 12px 32px rgba(18, 31, 25, 0.08);
+}
+
+.article-nav span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.article-nav strong {
+  color: var(--ink);
+  line-height: 1.35;
 }
 
 .site-footer {
@@ -812,6 +1007,15 @@ main {
   .timeline-item {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .article-shell {
+    width: min(100% - 28px, 860px);
+    padding: 42px 0;
+  }
+
+  .article-nav {
+    grid-template-columns: 1fr;
   }
 }
 

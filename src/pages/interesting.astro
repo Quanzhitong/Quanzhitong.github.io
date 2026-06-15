@@ -1,35 +1,53 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { getPostsBySection } from '../data/legacyPosts';
-
-const posts = getPostsBySection('tech');
 ---
 
 <BaseLayout title={`有趣知识 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
   <section class="page-hero">
     <div class="container">
-      <p class="section-kicker">Tech Notes</p>
-      <h1>有趣知识</h1>
-      <p>前端基础、工程化、框架升级和踩坑复盘。这里是旧站技术文章的主入口。</p>
+      <p class="section-kicker">Interesting</p>
+      <h1>奇奇怪怪的知识又增加了</h1>
+      <p>一些不够长到单独成文、但值得记下来的小知识。</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container post-grid">
-      {posts.map((post, index) => (
-        <a href={post.href} class:list={['post-card', { featured: index === 0 }]}>
-          <div>
-            <div class="post-meta">
-              <time datetime={post.date}>{post.date}</time>
-              <span class="post-chip">{post.categories[0]}</span>
-            </div>
-            <h2 class="post-title">{post.title}</h2>
-            <p class="post-desc">{post.description}</p>
-          </div>
-          <span class="post-link">打开文章</span>
+    <div class="article-shell article-body">
+      <h2>浏览器原生中文分词</h2>
+      <p>
+        浏览器原生的 <code>Intl.Segmenter</code> API 可以进行文本分词，支持中文。
+        <a href="https://jsbin.com/lubujejoke/edit?js,console" target="_blank" rel="noopener noreferrer">
+          查看示例
         </a>
-      ))}
+      </p>
+      <figure class="highlight plaintext">
+        <table>
+          <tr>
+            <td class="code">
+              <pre><span class="line">let segmenter = new Intl.Segmenter("zh-CN", &#123; granularity: "word" &#125;);</span><br><span class="line">let input = "Intl.Segmenter API 是浏览器原生的分词 API。";</span><br><span class="line">let segments = segmenter.segment(input);</span><br><span class="line"></span><br><span class="line">for (let &#123; segment, index, isWordLike &#125; of segments) &#123;</span><br><span class="line">  console.log(</span><br><span class="line">    "字符串位置 [%d, %d): %s%s",</span><br><span class="line">    index,</span><br><span class="line">    index + segment.length,</span><br><span class="line">    segment,</span><br><span class="line">    isWordLike ? " [单词]" : ""</span><br><span class="line">  );</span><br><span class="line">&#125;</span></pre>
+            </td>
+          </tr>
+        </table>
+      </figure>
+
+      <h2>解构赋值默认值</h2>
+      <p>ES6 解构赋值的默认值只有在值严格等于 <code>undefined</code> 时才会生效。</p>
+      <figure class="highlight plaintext">
+        <table>
+          <tr>
+            <td class="code">
+              <pre><span class="line">const foo = &#123;</span><br><span class="line">  name: 'xiuyuan',</span><br><span class="line">  age: null</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const &#123; name = '华仔', age = '18', sex = '男' &#125; = foo;</span><br><span class="line"></span><br><span class="line">console.log(age); // null</span><br><span class="line">console.log(sex); // '男'</span></pre>
+            </td>
+          </tr>
+        </table>
+      </figure>
+
+      <h2>让整个网页可编辑</h2>
+      <p>调试页面文案或布局时，可以临时打开页面编辑能力。</p>
+      <blockquote>
+        <p><code>document.body.contentEditable = true</code></p>
+      </blockquote>
     </div>
   </section>
 </BaseLayout>

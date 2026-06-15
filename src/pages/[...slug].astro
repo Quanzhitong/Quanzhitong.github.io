@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getLegacyArticleHtml } from '../data/legacyArticleContent';
+import { postsByDate, type LegacyPost } from '../data/legacyPosts';
+
+export function getStaticPaths() {
+  return postsByDate.map((post, index) => ({
+    params: {
+      slug: post.href.replace(/^\/+|\/+$/g, ''),
+    },
+    props: {
+      post,
+      articleHtml: getLegacyArticleHtml(post),
+      previousPost: postsByDate[index - 1],
+      nextPost: postsByDate[index + 1],
+    },
+  }));
+}
+
+type Props = {
+  post: LegacyPost;
+  articleHtml: string;
+  previousPost?: LegacyPost;
+  nextPost?: LegacyPost;
+};
+
+const { post, articleHtml, previousPost, nextPost } = Astro.props;
+const title = `${post.title} | ${SITE_TITLE}`;
+---
+
+<BaseLayout title={title} description={post.description || SITE_DESCRIPTION}>
+  <article class="article-shell">
+    <header class="article-header">
+      <a class="article-back" href="/blog">返回文章库</a>
+      <div class="post-meta">
+        <time datetime={post.date}>{post.date}</time>
+        {post.categories.map((category) => <span class="post-chip">{category}</span>)}
+      </div>
+      <h1>{post.title}</h1>
+      <p>{post.description}</p>
+    </header>
+
+    <div class="article-body" set:html={articleHtml || '<p>这篇旧文的正文暂时没有抽取成功。</p>'} />
+
+    <footer class="article-footer">
+      {post.tags.length > 0 && (
+        <div class="article-tags" aria-label="标签">
+          {post.tags.map((tag) => <span>#{tag}</span>)}
+        </div>
+      )}
+
+      <nav class="article-nav" aria-label="文章导航">
+        {previousPost ? (
+          <a href={previousPost.href}>
+            <span>上一篇</span>
+            <strong>{previousPost.title}</strong>
+          </a>
+        ) : (
+          <span></span>
+        )}
+        {nextPost ? (
+          <a href={nextPost.href}>
+            <span>下一篇</span>
+            <strong>{nextPost.title}</strong>
+          </a>
+        ) : (
+          <span></span>
+        )}
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>
