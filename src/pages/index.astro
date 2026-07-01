@@ -42,7 +42,7 @@ const categoryHighlights = allCategories
               <h3 class="post-title">{post.title}</h3>
               <p class="post-desc">{post.description}</p>
             </div>
-            <span class="post-link">阅读旧文</span>
+            <span class="post-link">阅读文章</span>
           </a>
         ))}
       </div>
@@ -55,7 +55,7 @@ const categoryHighlights = allCategories
         <p class="section-kicker">Archive</p>
         <h2>不是模板站，是可继续生长的个人知识库。</h2>
         <p class="section-copy">
-          这次迁移先把旧站文章重新接入 Astro 信息架构，保留真实内容和访问路径，再逐步把历史文章清洗成 Markdown/MDX。
+          这里按主题和时间整理前端工程、踩坑复盘、读书笔记和生活观察，方便回看，也方便继续沉淀。
         </p>
         <div class="button-row">
           <a class="button primary" href="/categories">查看分类</a>
@@ -80,7 +80,7 @@ const categoryHighlights = allCategories
           <p class="section-kicker">Latest</p>
           <h2 class="section-title">时间线</h2>
         </div>
-        <p class="section-copy">保留旧站路径，先恢复浏览体验，再逐篇做内容升级。</p>
+        <p class="section-copy">按发布时间整理最近记录。</p>
       </div>
       <div class="post-grid">
         {latestPosts.map((post) => (

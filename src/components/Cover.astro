@@ -31,7 +31,7 @@ const { postCount, categoryCount, latestTitle, latestHref } = Astro.props;
       <div class="hero-metrics" aria-label="站点统计">
         <div class="hero-metric">
           <strong>{postCount}</strong>
-          <span>篇旧文已接入</span>
+          <span>篇文章</span>
         </div>
         <div class="hero-metric">
           <strong>{categoryCount}</strong>
@@ -44,14 +44,14 @@ const { postCount, categoryCount, latestTitle, latestHref } = Astro.props;
       </div>
     </div>
 
-    <aside class="hero-panel" aria-label="站点状态">
+    <aside class="hero-panel" aria-label="站点概览">
       <div class="hero-panel-row">
         <span>最新记录</span>
         <a href={latestHref}>{latestTitle}</a>
       </div>
       <div class="hero-panel-row">
-        <span>迁移状态</span>
-        <strong>旧文路径已保留，索引已恢复</strong>
+        <span>文章索引</span>
+        <strong>按时间与主题整理</strong>
       </div>
       <div class="hero-panel-row">
         <span>当前重点</span>

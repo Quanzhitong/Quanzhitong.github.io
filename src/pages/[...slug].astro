@@ -41,7 +41,7 @@ const title = `${post.title} | ${SITE_TITLE}`;
       <p>{post.description}</p>
     </header>
 
-    <div class="article-body" set:html={articleHtml || '<p>这篇旧文的正文暂时没有抽取成功。</p>'} />
+    <div class="article-body" set:html={articleHtml || '<p>文章正文暂时无法显示。</p>'} />
 
     <footer class="article-footer">
       {post.tags.length > 0 && (
